@@ -31,8 +31,8 @@ const envSchema = z.object({
   // Security
   ENCRYPTION_KEY: z.string().min(32),
 
-  // Rate limiting
-  RATE_LIMIT_ENABLED: z.coerce.boolean().default(true),
+  // Rate limiting (z.coerce.boolean treats "false" as true, so use transform)
+  RATE_LIMIT_ENABLED: z.string().default('true').transform((v) => v === 'true'),
 });
 
 export type Env = z.infer<typeof envSchema>;
