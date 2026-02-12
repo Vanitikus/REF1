@@ -276,7 +276,7 @@ export async function reverseGeocode(
     const response = await fetch(url);
     if (!response.ok) return null;
 
-    const data = await response.json();
+    const data = await response.json() as { features?: Array<{ place_name?: string }> };
     const placeName = data.features?.[0]?.place_name ?? null;
 
     if (placeName) {

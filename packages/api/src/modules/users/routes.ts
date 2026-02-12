@@ -174,10 +174,20 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
     // Additional cleanup for data not covered by cascades:
 
     // 1. Delete stored images
-    const { data: images } = await supabase
-      .from('post_images')
-      .select('storage_path, thumbnail_path')
-      .in('post_id', supabase.from('posts').select('id').eq('user_id', request.userId));
+    // Get user's post IDs first, then fetch images
+    const { data: userPosts } = await supabase
+      .from('posts')
+      .select('id')
+      .eq('user_id', request.userId);
+
+    const postIds = (userPosts ?? []).map((p) => p.id);
+
+    const { data: images } = postIds.length > 0
+      ? await supabase
+          .from('post_images')
+          .select('storage_path, thumbnail_path')
+          .in('post_id', postIds)
+      : { data: [] as Array<{ storage_path: string; thumbnail_path: string }> };
 
     if (images) {
       const paths = images.flatMap((img) => [img.storage_path, img.thumbnail_path]);

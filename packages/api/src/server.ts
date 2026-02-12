@@ -72,7 +72,7 @@ async function buildServer() {
   await app.register(mapRoutes, { prefix: '/map' });
 
   // ── Error handler ─────────────────────────────────────────
-  app.setErrorHandler((error, request, reply) => {
+  app.setErrorHandler((error: Error & { statusCode?: number; code?: string }, request, reply) => {
     const statusCode = error.statusCode ?? 500;
     const message = statusCode >= 500 ? 'Internal server error' : error.message;
 
@@ -110,8 +110,8 @@ async function start() {
   try {
     await app.listen({ port: env.PORT, host: env.HOST });
     app.log.info(`REFiND API running on ${env.HOST}:${env.PORT}`);
-  } catch (err) {
-    app.log.error(err);
+  } catch (err: unknown) {
+    app.log.error(err as Error);
     process.exit(1);
   }
 }

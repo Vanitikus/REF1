@@ -335,7 +335,7 @@ export async function postRoutes(app: FastifyInstance): Promise<void> {
       const buffer = await part.toBuffer();
 
       // Validate file type
-      if (!POST_CONSTRAINTS.allowedImageTypes.includes(part.mimetype)) {
+      if (!POST_CONSTRAINTS.allowedImageTypes.includes(part.mimetype as typeof POST_CONSTRAINTS.allowedImageTypes[number])) {
         return reply.status(400).send({
           success: false,
           error: { code: 'INVALID_FILE_TYPE', message: `Allowed types: ${POST_CONSTRAINTS.allowedImageTypes.join(', ')}` },
