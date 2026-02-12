@@ -1,0 +1,31 @@
+{
+  "name": "refind-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "REFiND - The Waze of Lost & Found. Civic-tech platform for posting, discovering, matching, and recovering lost or found items.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "api:dev": "npm run dev -w packages/api",
+    "api:build": "npm run build -w packages/api",
+    "api:start": "npm run start -w packages/api",
+    "mobile:start": "npm run start -w packages/mobile",
+    "mobile:ios": "npm run ios -w packages/mobile",
+    "mobile:android": "npm run android -w packages/mobile",
+    "web:dev": "npm run dev -w packages/web",
+    "web:build": "npm run build -w packages/web",
+    "shared:build": "npm run build -w packages/shared",
+    "db:migrate": "supabase db push",
+    "db:reset": "supabase db reset",
+    "db:seed": "supabase db seed",
+    "lint": "eslint packages/*/src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit -p packages/api/tsconfig.json && tsc --noEmit -p packages/shared/tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "UNLICENSED"
+}
