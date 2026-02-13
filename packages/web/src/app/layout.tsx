@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { NavShell } from '@/components/NavShell';
+import { AuthProvider } from '@/lib/auth-context';
 
 export const metadata: Metadata = {
   title: 'REFiND - The Waze of Lost & Found',
@@ -11,7 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ro">
       <body className="bg-gray-50 text-gray-900 antialiased">
-        <NavShell>{children}</NavShell>
+        <AuthProvider>
+          <NavShell>{children}</NavShell>
+        </AuthProvider>
       </body>
     </html>
   );
