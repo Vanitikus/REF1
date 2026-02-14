@@ -1,23 +1,77 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { PostCard } from '@/components/PostCard';
 import { FilterBar, type TypeFilter, type CategoryFilter } from '@/components/FilterBar';
 import { StatsBar } from '@/components/StatsBar';
 import { MOCK_POSTS } from '@/lib/mock-data';
+import { useAuth } from '@/lib/auth-context';
+
+type SortKey = 'recent' | 'reward' | 'views';
 
 export default function FeedPage() {
+  const { isAuthenticated } = useAuth();
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
+  const [sort, setSort] = useState<SortKey>('recent');
 
-  const filtered = MOCK_POSTS.filter((post) => {
-    if (typeFilter !== 'all' && post.type !== typeFilter) return false;
-    if (categoryFilter !== 'all' && post.category !== categoryFilter) return false;
-    return true;
-  });
+  const filtered = useMemo(() => {
+    let posts = MOCK_POSTS.filter((post) => {
+      if (typeFilter !== 'all' && post.type !== typeFilter) return false;
+      if (categoryFilter !== 'all' && post.category !== categoryFilter) return false;
+      return true;
+    });
+
+    if (sort === 'recent') {
+      posts = [...posts].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (sort === 'reward') {
+      posts = [...posts].sort((a, b) => (b.rewardAmount || 0) - (a.rewardAmount || 0));
+    } else if (sort === 'views') {
+      posts = [...posts].sort((a, b) => b.viewCount - a.viewCount);
+    }
+
+    return posts;
+  }, [typeFilter, categoryFilter, sort]);
 
   return (
     <div className="py-6 space-y-6">
+      {/* Hero for visitors */}
+      {!isAuthenticated && (
+        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
+          <div className="relative">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">
+              Ai pierdut ceva? Ai gasit ceva?
+            </h1>
+            <p className="text-emerald-100 text-sm sm:text-base mb-6 max-w-lg">
+              REFiND conecteaza oamenii care au pierdut obiecte cu cei care le-au gasit.
+              Algoritmul nostru AI gaseste match-uri automat.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/posteaza"
+                className="px-5 py-2.5 bg-white text-emerald-700 rounded-xl text-sm font-semibold hover:bg-emerald-50 transition-colors"
+              >
+                + Posteaza acum
+              </Link>
+              <Link
+                href="/autentificare"
+                className="px-5 py-2.5 bg-emerald-500/30 text-white border border-emerald-400/50 rounded-xl text-sm font-medium hover:bg-emerald-500/50 transition-colors"
+              >
+                Creeaza cont gratuit
+              </Link>
+            </div>
+            <div className="flex gap-6 mt-6 text-emerald-200 text-xs">
+              <span>{'\u{2705}'} 100% Gratuit</span>
+              <span>{'\u{1F916}'} Match AI automat</span>
+              <span>{'\u{1F512}'} Chat securizat</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Stats */}
       <StatsBar />
 
@@ -29,15 +83,19 @@ export default function FeedPage() {
         onCategoryChange={setCategoryFilter}
       />
 
-      {/* Results count */}
+      {/* Results count + sort */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">
           {filtered.length} rezultat{filtered.length !== 1 ? 'e' : ''}
         </p>
-        <select className="text-sm text-gray-500 bg-transparent border border-gray-200 rounded-lg px-2 py-1">
-          <option>Cele mai recente</option>
-          <option>Cele mai apropiate</option>
-          <option>Cu recompensa</option>
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as SortKey)}
+          className="text-sm text-gray-500 bg-transparent border border-gray-200 rounded-lg px-2 py-1"
+        >
+          <option value="recent">Cele mai recente</option>
+          <option value="views">Cele mai vizualizate</option>
+          <option value="reward">Cu recompensa</option>
         </select>
       </div>
 
@@ -50,7 +108,7 @@ export default function FeedPage() {
 
       {filtered.length === 0 && (
         <div className="text-center py-16 text-gray-400">
-          <span className="text-5xl block mb-4">&#x1F50D;</span>
+          <span className="text-5xl block mb-4">{'\u{1F50D}'}</span>
           <p className="text-lg font-medium">Niciun rezultat gasit</p>
           <p className="text-sm mt-1">Incearca sa schimbi filtrele</p>
         </div>

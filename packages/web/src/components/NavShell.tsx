@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
+import { Footer } from './Footer';
 
 const NAV_ITEMS: { href: string; icon: string; label: string; isFab?: boolean }[] = [
   { href: '/', icon: '\u{1F3E0}', label: 'Feed' },
@@ -21,6 +22,7 @@ export function NavShell({ children }: { children: React.ReactNode }) {
     <>
       {!isAuthPage && <Header pathname={pathname} />}
       <main className={isAuthPage ? '' : 'max-w-6xl mx-auto px-4 pb-20'}>{children}</main>
+      {!isAuthPage && <Footer />}
       {!isAuthPage && <BottomNav pathname={pathname} />}
     </>
   );
