@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { ImageUpload } from '@/components/ImageUpload';
+import { LocationPicker } from '@/components/LocationPicker';
 
 type PostType = 'lost' | 'found';
 type Category = 'pet' | 'object' | 'document' | 'other';
@@ -20,8 +22,9 @@ export default function PosteazaPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
+  const [locationCoords, setLocationCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [reward, setReward] = useState('');
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
   const totalSteps = 3;
@@ -59,6 +62,9 @@ export default function PosteazaPage() {
           </div>
           <h3 className="font-semibold">{title}</h3>
           <p className="text-sm text-gray-500 mt-1">{location}</p>
+          {images.length > 0 && (
+            <p className="text-xs text-gray-400 mt-1">{'\u{1F4F7}'} {images.length} fotografi{images.length === 1 ? 'e' : 'i'} atasate</p>
+          )}
         </div>
         <div className="flex gap-3 justify-center">
           <Link
@@ -76,6 +82,7 @@ export default function PosteazaPage() {
               setTitle('');
               setDescription('');
               setLocation('');
+              setLocationCoords(null);
               setReward('');
               setImages([]);
             }}
@@ -206,16 +213,14 @@ export default function PosteazaPage() {
             <label className="text-sm font-semibold text-gray-700 block mb-2">
               Locatie <span className="text-red-400">*</span>
             </label>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">{'\u{1F4CD}'}</span>
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="ex: Parcul Herastrau, Sector 1, Bucuresti"
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-              />
-            </div>
+            <LocationPicker
+              value={location}
+              coords={locationCoords}
+              onChange={(loc, coords) => {
+                setLocation(loc);
+                setLocationCoords(coords);
+              }}
+            />
           </div>
 
           {postType === 'lost' && (
@@ -244,27 +249,7 @@ export default function PosteazaPage() {
         <div className="space-y-6 animate-in fade-in">
           <div>
             <label className="text-sm font-semibold text-gray-700 block mb-3">Adauga fotografii</label>
-            <div className="grid grid-cols-3 gap-3">
-              <button
-                onClick={() => setImages([...images, 'photo'])}
-                className="aspect-square border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center gap-1 text-gray-400 hover:border-emerald-500 hover:text-emerald-500 transition-colors"
-              >
-                <span className="text-2xl">{'\u{1F4F7}'}</span>
-                <span className="text-[10px] font-medium">Adauga foto</span>
-              </button>
-              {images.map((_, i) => (
-                <div key={i} className="aspect-square bg-gray-100 rounded-xl flex items-center justify-center relative">
-                  <span className="text-3xl">{'\u{1F5BC}'}</span>
-                  <button
-                    onClick={() => setImages(images.filter((__, idx) => idx !== i))}
-                    className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full text-[10px] flex items-center justify-center"
-                  >
-                    {'\u2715'}
-                  </button>
-                </div>
-              ))}
-            </div>
-            <p className="text-[11px] text-gray-400 mt-2">Max 5 fotografii, 10MB fiecare. AI-ul va analiza automat imaginile.</p>
+            <ImageUpload images={images} onImagesChange={setImages} />
           </div>
 
           {/* Summary */}
@@ -290,6 +275,9 @@ export default function PosteazaPage() {
               )}
               {images.length > 0 && (
                 <p className="text-xs text-gray-400">{'\u{1F4F7}'} {images.length} fotografi{images.length === 1 ? 'e' : 'i'}</p>
+              )}
+              {locationCoords && (
+                <p className="text-xs text-gray-400">{'\u{1F4CD}'} GPS: {locationCoords.lat.toFixed(4)}, {locationCoords.lng.toFixed(4)}</p>
               )}
             </div>
           </div>

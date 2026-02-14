@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { PostCard } from '@/components/PostCard';
 import { FilterBar, type TypeFilter, type CategoryFilter } from '@/components/FilterBar';
@@ -9,12 +9,15 @@ import { MOCK_POSTS } from '@/lib/mock-data';
 import { useAuth } from '@/lib/auth-context';
 
 type SortKey = 'recent' | 'reward' | 'views';
+const PAGE_SIZE = 6;
 
 export default function FeedPage() {
   const { isAuthenticated } = useAuth();
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [sort, setSort] = useState<SortKey>('recent');
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     let posts = MOCK_POSTS.filter((post) => {
@@ -33,6 +36,36 @@ export default function FeedPage() {
 
     return posts;
   }, [typeFilter, categoryFilter, sort]);
+
+  // Reset visible count when filters change
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [typeFilter, categoryFilter, sort]);
+
+  const visiblePosts = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
+
+  // Infinite scroll observer
+  const loadMore = useCallback(() => {
+    setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, filtered.length));
+  }, [filtered.length]);
+
+  useEffect(() => {
+    const loader = loaderRef.current;
+    if (!loader) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMore();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(loader);
+    return () => observer.disconnect();
+  }, [hasMore, loadMore]);
 
   return (
     <div className="py-6 space-y-6">
@@ -61,6 +94,12 @@ export default function FeedPage() {
                 className="px-5 py-2.5 bg-emerald-500/30 text-white border border-emerald-400/50 rounded-xl text-sm font-medium hover:bg-emerald-500/50 transition-colors"
               >
                 Creeaza cont gratuit
+              </Link>
+              <Link
+                href="/cum-functioneaza"
+                className="px-5 py-2.5 text-emerald-200 text-sm font-medium hover:text-white transition-colors"
+              >
+                Cum functioneaza? {'\u2192'}
               </Link>
             </div>
             <div className="flex gap-6 mt-6 text-emerald-200 text-xs">
@@ -101,16 +140,37 @@ export default function FeedPage() {
 
       {/* Post grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filtered.map((post) => (
+        {visiblePosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
       </div>
 
+      {/* Infinite scroll loader */}
+      {hasMore && (
+        <div ref={loaderRef} className="flex justify-center py-8">
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <div className="w-5 h-5 border-2 border-emerald-300 border-t-emerald-600 rounded-full animate-spin" />
+            Se incarca...
+          </div>
+        </div>
+      )}
+
+      {/* Empty state */}
       {filtered.length === 0 && (
         <div className="text-center py-16 text-gray-400">
           <span className="text-5xl block mb-4">{'\u{1F50D}'}</span>
           <p className="text-lg font-medium">Niciun rezultat gasit</p>
-          <p className="text-sm mt-1">Incearca sa schimbi filtrele</p>
+          <p className="text-sm mt-1 mb-4">Incearca sa schimbi filtrele sau creeaza o postare noua.</p>
+          <Link href="/posteaza" className="inline-block px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors">
+            + Posteaza acum
+          </Link>
+        </div>
+      )}
+
+      {/* End of feed */}
+      {!hasMore && filtered.length > 0 && (
+        <div className="text-center py-6 text-gray-300 text-xs">
+          Ai ajuns la sfarsitul feed-ului. {'\u{1F389}'}
         </div>
       )}
     </div>

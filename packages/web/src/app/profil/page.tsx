@@ -12,12 +12,21 @@ export default function ProfilPage() {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
   const router = useRouter();
   const [tab, setTab] = useState<Tab>('posts');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editName, setEditName] = useState('');
+  const [editBio, setEditBio] = useState('');
   const [settings, setSettings] = useState({
     push: true,
     alerts: true,
     email: false,
     dark: false,
   });
+  const [showZoneModal, setShowZoneModal] = useState(false);
+  const [zoneRadius, setZoneRadius] = useState(2);
+  const [zoneCategories, setZoneCategories] = useState<string[]>(['pet', 'object']);
+  const [zones, setZones] = useState([
+    { id: '1', name: 'Bucuresti, Sector 1', radius: 2, categories: ['pet', 'object'] },
+  ]);
 
   if (isLoading) {
     return (
@@ -55,6 +64,30 @@ export default function ProfilPage() {
     setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const openEdit = () => {
+    setEditName(user.displayName);
+    setEditBio('');
+    setShowEditModal(true);
+  };
+
+  const toggleZoneCategory = (cat: string) => {
+    setZoneCategories((prev) => prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]);
+  };
+
+  const addZone = () => {
+    setZones((prev) => [...prev, {
+      id: String(Date.now()),
+      name: `Zona ${prev.length + 1}`,
+      radius: zoneRadius,
+      categories: zoneCategories,
+    }]);
+    setShowZoneModal(false);
+  };
+
+  const removeZone = (id: string) => {
+    setZones((prev) => prev.filter((z) => z.id !== id));
+  };
+
   return (
     <div className="py-6 max-w-2xl mx-auto space-y-6">
       {/* Profile header */}
@@ -75,7 +108,10 @@ export default function ProfilPage() {
             <p className="text-sm text-gray-500">{user.email}</p>
             <p className="text-xs text-gray-400 mt-1">Rol: {user.role}</p>
           </div>
-          <button className="text-sm text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-1.5 rounded-lg">
+          <button
+            onClick={openEdit}
+            className="text-sm text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-1.5 rounded-lg"
+          >
             Editeaza
           </button>
         </div>
@@ -93,6 +129,16 @@ export default function ProfilPage() {
             <div className="text-xl font-bold text-amber-700">3</div>
             <div className="text-[11px] text-amber-600">Rezolvate</div>
           </div>
+        </div>
+
+        {/* Quick links */}
+        <div className="flex gap-2 mt-4">
+          <Link href="/postarile-mele" className="flex-1 text-center py-2 text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors">
+            {'\u{1F4DD}'} Postarile mele
+          </Link>
+          <Link href="/matchuri" className="flex-1 text-center py-2 text-xs font-medium text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+            {'\u{1F517}'} Match-uri AI
+          </Link>
         </div>
       </div>
 
@@ -151,37 +197,42 @@ export default function ProfilPage() {
               </Link>
             </div>
           ) : (
-            userPosts.map((post) => (
-              <Link
-                key={post.id}
-                href={`/post/${post.id}`}
-                className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-200 hover:shadow-sm transition-shadow"
-              >
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl shrink-0 ${
-                  post.type === 'lost' ? 'bg-red-50' : 'bg-emerald-50'
-                }`}>
-                  {post.imageEmoji}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold truncate">{post.title}</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">{post.locationName}</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-full ${
-                      post.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
-                    }`}>
-                      {post.type === 'lost' ? 'Pierdut' : 'Gasit'}
-                    </span>
-                    <span className="text-[10px] text-gray-400">{getTimeAgo(post.createdAt)}</span>
+            <>
+              {userPosts.map((post) => (
+                <Link
+                  key={post.id}
+                  href={`/post/${post.id}`}
+                  className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-200 hover:shadow-sm transition-shadow"
+                >
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl shrink-0 ${
+                    post.type === 'lost' ? 'bg-red-50' : 'bg-emerald-50'
+                  }`}>
+                    {post.imageEmoji}
                   </div>
-                </div>
-                <div className="text-right shrink-0">
-                  <div className="text-xs text-gray-400">{post.viewCount} vizualizari</div>
-                  {post.matchCount > 0 && (
-                    <div className="text-xs text-emerald-600 font-medium">{post.matchCount} match-uri</div>
-                  )}
-                </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-semibold truncate">{post.title}</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">{post.locationName}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-full ${
+                        post.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+                      }`}>
+                        {post.type === 'lost' ? 'Pierdut' : 'Gasit'}
+                      </span>
+                      <span className="text-[10px] text-gray-400">{getTimeAgo(post.createdAt)}</span>
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <div className="text-xs text-gray-400">{post.viewCount} vizualizari</div>
+                    {post.matchCount > 0 && (
+                      <div className="text-xs text-emerald-600 font-medium">{post.matchCount} match-uri</div>
+                    )}
+                  </div>
+                </Link>
+              ))}
+              <Link href="/postarile-mele" className="block text-center text-sm text-emerald-600 font-medium hover:underline py-2">
+                Vezi toate postarile {'\u2192'}
               </Link>
-            ))
+            </>
           )}
         </div>
       )}
@@ -235,19 +286,36 @@ export default function ProfilPage() {
             </div>
           ))}
 
-          {/* Alert zones */}
+          {/* Alert zones management */}
           <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <h3 className="text-sm font-medium mb-2">Zone de alerta</h3>
-            <p className="text-xs text-gray-400 mb-3">Primeste notificari cand apare ceva pierdut/gasit in zona ta.</p>
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-3">
-              <span className="text-xl">{'\u{1F4CD}'}</span>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-blue-800">Bucuresti, Sector 1</p>
-                <p className="text-xs text-blue-600">Raza: 2km - Animale, Obiecte</p>
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h3 className="text-sm font-medium">Zone de alerta</h3>
+                <p className="text-xs text-gray-400">Primeste notificari cand apare ceva in zona ta.</p>
               </div>
-              <button className="text-xs text-blue-600 hover:underline">Editeaza</button>
             </div>
-            <button className="mt-3 w-full py-2 text-sm text-emerald-600 font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 transition-colors">
+
+            <div className="space-y-2 mb-3">
+              {zones.map((zone) => (
+                <div key={zone.id} className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-3">
+                  <span className="text-xl">{'\u{1F4CD}'}</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-blue-800">{zone.name}</p>
+                    <p className="text-xs text-blue-600">
+                      Raza: {zone.radius}km - {zone.categories.map((c) => c === 'pet' ? 'Animale' : c === 'object' ? 'Obiecte' : c === 'document' ? 'Documente' : 'Altele').join(', ')}
+                    </p>
+                  </div>
+                  <button onClick={() => removeZone(zone.id)} className="text-xs text-red-400 hover:text-red-600 px-2 py-1 rounded hover:bg-red-50">
+                    {'\u2715'}
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setShowZoneModal(true)}
+              className="w-full py-2 text-sm text-emerald-600 font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 transition-colors"
+            >
               + Adauga zona noua
             </button>
           </div>
@@ -262,6 +330,151 @@ export default function ProfilPage() {
             <button className="w-full py-2 text-xs text-gray-400 hover:text-red-400 transition-colors">
               Sterge contul
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Profile Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold">Editeaza profilul</h2>
+              <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-gray-600 text-xl">
+                {'\u2715'}
+              </button>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="w-20 h-20 rounded-full bg-emerald-600 text-white flex items-center justify-center text-3xl font-bold">
+                  {user.avatarInitial}
+                </div>
+                <button className="absolute bottom-0 right-0 w-7 h-7 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center text-xs hover:bg-gray-50">
+                  {'\u{1F4F7}'}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-1">Nume</label>
+              <input
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-1">Bio</label>
+              <textarea
+                value={editBio}
+                onChange={(e) => setEditBio(e.target.value)}
+                placeholder="Spune ceva despre tine..."
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                maxLength={200}
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-1">Email</label>
+              <input
+                value={user.email}
+                disabled
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 text-gray-400"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">Email-ul nu poate fi schimbat.</p>
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="flex-1 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200"
+              >
+                Anuleaza
+              </button>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="flex-1 py-2.5 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700"
+              >
+                Salveaza
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Zone Modal */}
+      {showZoneModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold">Zona noua de alerta</h2>
+              <button onClick={() => setShowZoneModal(false)} className="text-gray-400 hover:text-gray-600 text-xl">
+                {'\u2715'}
+              </button>
+            </div>
+
+            <div className="bg-gray-100 rounded-xl h-40 flex items-center justify-center text-gray-400 text-sm">
+              {'\u{1F5FA}'} Harta - selecteaza locatia
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-2">Raza: {zoneRadius} km</label>
+              <input
+                type="range"
+                min={1}
+                max={10}
+                value={zoneRadius}
+                onChange={(e) => setZoneRadius(Number(e.target.value))}
+                className="w-full accent-emerald-600"
+              />
+              <div className="flex justify-between text-[10px] text-gray-400">
+                <span>1 km</span>
+                <span>10 km</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-2">Categorii</label>
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  { key: 'pet', label: 'Animale', emoji: '\u{1F43E}' },
+                  { key: 'object', label: 'Obiecte', emoji: '\u{1F4E6}' },
+                  { key: 'document', label: 'Documente', emoji: '\u{1F4C4}' },
+                  { key: 'other', label: 'Altele', emoji: '\u{2753}' },
+                ].map((cat) => (
+                  <button
+                    key={cat.key}
+                    onClick={() => toggleZoneCategory(cat.key)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                      zoneCategories.includes(cat.key)
+                        ? 'bg-emerald-100 text-emerald-700 border border-emerald-300'
+                        : 'bg-gray-100 text-gray-500 border border-gray-200'
+                    }`}
+                  >
+                    {cat.emoji} {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => setShowZoneModal(false)}
+                className="flex-1 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200"
+              >
+                Anuleaza
+              </button>
+              <button
+                onClick={addZone}
+                disabled={zoneCategories.length === 0}
+                className="flex-1 py-2.5 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 disabled:opacity-50"
+              >
+                Adauga zona
+              </button>
+            </div>
           </div>
         </div>
       )}
