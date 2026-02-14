@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
+import { useTheme } from '@/lib/theme-context';
 import { Footer } from './Footer';
 
 const NAV_ITEMS: { href: string; icon: string; label: string; isFab?: boolean }[] = [
@@ -30,6 +31,7 @@ export function NavShell({ children }: { children: React.ReactNode }) {
 
 function Header({ pathname }: { pathname: string }) {
   const { isAuthenticated, user } = useAuth();
+  const { isDark, toggle: toggleTheme } = useTheme();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -94,6 +96,14 @@ function Header({ pathname }: { pathname: string }) {
           >
             + Posteaza
           </Link>
+
+          <button
+            onClick={toggleTheme}
+            className="hidden sm:flex p-2 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+            title={isDark ? 'Mod luminos' : 'Mod intunecat'}
+          >
+            <span className="text-lg">{isDark ? '\u{2600}' : '\u{1F319}'}</span>
+          </button>
 
           <Link href="/notificari" className="relative p-2 text-gray-500 hover:text-gray-700">
             <span className="text-xl">{'\u{1F514}'}</span>

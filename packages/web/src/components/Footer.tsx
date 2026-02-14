@@ -39,9 +39,14 @@ export function Footer() {
           <div>
             <h3 className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-3">Informatii</h3>
             <ul className="space-y-2">
-              {['Despre noi', 'Cum functioneaza', 'Termeni si conditii', 'Confidentialitate'].map((label) => (
-                <li key={label}>
-                  <span className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer">{label}</span>
+              {[
+                { href: '/despre', label: 'Despre noi' },
+                { href: '/cum-functioneaza', label: 'Cum functioneaza' },
+                { href: '/termeni', label: 'Termeni si conditii' },
+                { href: '/confidentialitate', label: 'Confidentialitate' },
+              ].map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-700">{item.label}</Link>
                 </li>
               ))}
             </ul>
