@@ -8,7 +8,7 @@ export function PostCard({ post }: { post: MockPost }) {
     <Link href={`/post/${post.id}`} className="block">
       <article className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
         {/* Image placeholder */}
-        <div className={`h-44 flex items-center justify-center ${isLost ? 'bg-red-50' : 'bg-emerald-50'}`}>
+        <div className={`h-44 flex items-center justify-center ${isLost ? 'bg-red-50' : 'bg-brand-teal-50'}`}>
           <span className="text-6xl">{post.imageEmoji}</span>
         </div>
 
@@ -18,7 +18,7 @@ export function PostCard({ post }: { post: MockPost }) {
             <span className={`text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
               isLost
                 ? 'bg-red-100 text-red-700'
-                : 'bg-emerald-100 text-emerald-700'
+                : 'bg-brand-teal-100 text-brand-teal-700'
             }`}>
               {isLost ? 'Pierdut' : 'Gasit'}
             </span>
@@ -57,17 +57,17 @@ export function PostCard({ post }: { post: MockPost }) {
           <div className="flex items-center justify-between pt-3 border-t border-gray-100">
             <div className="flex items-center gap-2">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white ${
-                post.user.isVerified ? 'bg-emerald-600' : 'bg-gray-400'
+                post.user.isVerified ? 'bg-brand-teal-400' : 'bg-gray-400'
               }`}>
                 {post.user.avatarInitial}
               </div>
               <span className="text-xs text-gray-600">{post.user.displayName}</span>
-              {post.user.isVerified && <span className="text-emerald-500 text-xs">&#x2713;</span>}
+              {post.user.isVerified && <span className="text-brand-teal-400 text-xs">&#x2713;</span>}
             </div>
             <div className="flex items-center gap-3 text-[11px] text-gray-400">
               <span>&#x1F441; {post.viewCount}</span>
               {post.matchCount > 0 && (
-                <span className="text-emerald-500 font-medium">&#x1F517; {post.matchCount} match{post.matchCount > 1 ? '-uri' : ''}</span>
+                <span className="text-brand-orange-500 font-medium">&#x1F517; {post.matchCount} match{post.matchCount > 1 ? '-uri' : ''}</span>
               )}
             </div>
           </div>

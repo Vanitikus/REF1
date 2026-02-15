@@ -71,38 +71,38 @@ export default function FeedPage() {
     <div className="py-6 space-y-6">
       {/* Hero for visitors */}
       {!isAuthenticated && (
-        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-r from-brand-orange-500 to-brand-teal-400 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
           <div className="relative">
             <h1 className="text-2xl sm:text-3xl font-bold mb-2">
               Ai pierdut ceva? Ai gasit ceva?
             </h1>
-            <p className="text-emerald-100 text-sm sm:text-base mb-6 max-w-lg">
-              REFiND conecteaza oamenii care au pierdut obiecte cu cei care le-au gasit.
+            <p className="text-brand-orange-100 text-sm sm:text-base mb-6 max-w-lg">
+              ReFind conecteaza oamenii care au pierdut obiecte cu cei care le-au gasit.
               Algoritmul nostru AI gaseste match-uri automat.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/posteaza"
-                className="px-5 py-2.5 bg-white text-emerald-700 rounded-xl text-sm font-semibold hover:bg-emerald-50 transition-colors"
+                className="px-5 py-2.5 bg-white text-brand-orange-600 rounded-xl text-sm font-semibold hover:bg-brand-orange-50 transition-colors"
               >
                 + Posteaza acum
               </Link>
               <Link
                 href="/autentificare"
-                className="px-5 py-2.5 bg-emerald-500/30 text-white border border-emerald-400/50 rounded-xl text-sm font-medium hover:bg-emerald-500/50 transition-colors"
+                className="px-5 py-2.5 bg-brand-orange-500/30 text-white border border-brand-orange-400/50 rounded-xl text-sm font-medium hover:bg-brand-orange-500/50 transition-colors"
               >
                 Creeaza cont gratuit
               </Link>
               <Link
                 href="/cum-functioneaza"
-                className="px-5 py-2.5 text-emerald-200 text-sm font-medium hover:text-white transition-colors"
+                className="px-5 py-2.5 text-brand-orange-200 text-sm font-medium hover:text-white transition-colors"
               >
                 Cum functioneaza? {'\u2192'}
               </Link>
             </div>
-            <div className="flex gap-6 mt-6 text-emerald-200 text-xs">
+            <div className="flex gap-6 mt-6 text-brand-orange-200 text-xs">
               <span>{'\u{2705}'} 100% Gratuit</span>
               <span>{'\u{1F916}'} Match AI automat</span>
               <span>{'\u{1F512}'} Chat securizat</span>
@@ -149,7 +149,7 @@ export default function FeedPage() {
       {hasMore && (
         <div ref={loaderRef} className="flex justify-center py-8">
           <div className="flex items-center gap-2 text-sm text-gray-400">
-            <div className="w-5 h-5 border-2 border-emerald-300 border-t-emerald-600 rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
             Se incarca...
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function FeedPage() {
           <span className="text-5xl block mb-4">{'\u{1F50D}'}</span>
           <p className="text-lg font-medium">Niciun rezultat gasit</p>
           <p className="text-sm mt-1 mb-4">Incearca sa schimbi filtrele sau creeaza o postare noua.</p>
-          <Link href="/posteaza" className="inline-block px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors">
+          <Link href="/posteaza" className="inline-block px-5 py-2.5 bg-brand-orange-500 text-white rounded-xl text-sm font-medium hover:bg-brand-orange-600 transition-colors">
             + Posteaza acum
           </Link>
         </div>

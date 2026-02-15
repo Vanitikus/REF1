@@ -67,8 +67,8 @@ export function ImageUpload({ images, onImagesChange, maxImages = 5, maxSizeMB =
         onClick={() => inputRef.current?.click()}
         className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
           dragOver
-            ? 'border-emerald-500 bg-emerald-50'
-            : 'border-gray-300 hover:border-emerald-400 hover:bg-gray-50'
+            ? 'border-brand-orange-500 bg-brand-orange-50'
+            : 'border-gray-300 hover:border-brand-orange-400 hover:bg-gray-50'
         } ${images.length >= maxImages ? 'opacity-50 pointer-events-none' : ''}`}
       >
         <input

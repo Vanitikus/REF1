@@ -12,7 +12,7 @@ export default function NotFound() {
         <div className="flex gap-3 justify-center">
           <Link
             href="/"
-            className="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors"
+            className="px-6 py-2.5 bg-brand-orange-500 text-white rounded-xl text-sm font-medium hover:bg-brand-orange-600 transition-colors"
           >
             Inapoi la feed
           </Link>

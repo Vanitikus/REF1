@@ -36,9 +36,9 @@ export default function CumFunctioneazaPage() {
     <div className="py-8 max-w-3xl mx-auto space-y-12">
       {/* Hero */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold mb-3">Cum functioneaza REFiND?</h1>
+        <h1 className="text-3xl font-bold mb-3">Cum functioneaza ReFind?</h1>
         <p className="text-gray-500 max-w-lg mx-auto">
-          REFiND este platforma civica care foloseste inteligenta artificiala pentru a conecta automat
+          ReFind este platforma civica care foloseste inteligenta artificiala pentru a conecta automat
           obiectele pierdute cu cele gasite. Simplu, rapid, eficient.
         </p>
       </div>
@@ -47,12 +47,12 @@ export default function CumFunctioneazaPage() {
       <div className="space-y-6">
         {STEPS.map((step, i) => (
           <div key={i} className="flex items-start gap-4 bg-white rounded-2xl border border-gray-200 p-6">
-            <div className="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center text-3xl shrink-0">
+            <div className="w-14 h-14 rounded-xl bg-brand-orange-50 flex items-center justify-center text-3xl shrink-0">
               {step.emoji}
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-bold text-brand-orange-500 bg-brand-orange-50 px-2 py-0.5 rounded-full">
                   Pasul {i + 1}
                 </span>
                 <h3 className="text-lg font-bold">{step.title}</h3>
@@ -64,7 +64,7 @@ export default function CumFunctioneazaPage() {
       </div>
 
       {/* AI Matching Engine */}
-      <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-2xl border border-emerald-200 p-6">
+      <div className="bg-gradient-to-br from-brand-orange-50 to-brand-teal-50 rounded-2xl border border-brand-orange-200 p-6">
         <div className="text-center mb-6">
           <span className="text-4xl block mb-2">{'\u{1F9E0}'}</span>
           <h2 className="text-xl font-bold">Motorul de matching AI</h2>
@@ -77,7 +77,7 @@ export default function CumFunctioneazaPage() {
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg">{signal.emoji}</span>
                 <span className="text-sm font-semibold">{signal.label}</span>
-                <span className="text-xs font-bold text-emerald-600 ml-auto">{signal.weight}</span>
+                <span className="text-xs font-bold text-brand-orange-500 ml-auto">{signal.weight}</span>
               </div>
               <p className="text-xs text-gray-500">{signal.desc}</p>
             </div>
@@ -89,12 +89,12 @@ export default function CumFunctioneazaPage() {
             <div className="flex-1">
               <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                 <span>Scor total</span>
-                <span className="font-bold text-emerald-600">0% - 100%</span>
+                <span className="font-bold text-brand-orange-500">0% - 100%</span>
               </div>
               <div className="h-3 bg-gray-100 rounded-full overflow-hidden flex">
                 <div className="bg-red-400 h-full" style={{ width: '30%' }} />
                 <div className="bg-amber-400 h-full" style={{ width: '30%' }} />
-                <div className="bg-emerald-400 h-full" style={{ width: '40%' }} />
+                <div className="bg-brand-teal-400 h-full" style={{ width: '40%' }} />
               </div>
               <div className="flex justify-between text-[10px] text-gray-400 mt-1">
                 <span>Slab (&lt;50%)</span>
@@ -108,7 +108,7 @@ export default function CumFunctioneazaPage() {
 
       {/* Features */}
       <div>
-        <h2 className="text-xl font-bold text-center mb-6">De ce REFiND?</h2>
+        <h2 className="text-xl font-bold text-center mb-6">De ce ReFind?</h2>
         <div className="grid sm:grid-cols-3 gap-4">
           {[
             { emoji: '\u{1F30D}', title: 'Harta interactiva', desc: 'Vizualizeaza toate postarile pe harta in timp real.' },
@@ -128,13 +128,13 @@ export default function CumFunctioneazaPage() {
       </div>
 
       {/* CTA */}
-      <div className="text-center bg-emerald-600 rounded-2xl p-8 text-white">
+      <div className="text-center bg-brand-orange-500 rounded-2xl p-8 text-white">
         <h2 className="text-2xl font-bold mb-2">Gata sa incepi?</h2>
-        <p className="text-emerald-100 mb-6 text-sm">Creeaza prima ta postare in mai putin de un minut.</p>
+        <p className="text-brand-orange-100 mb-6 text-sm">Creeaza prima ta postare in mai putin de un minut.</p>
         <div className="flex gap-3 justify-center">
           <Link
             href="/posteaza"
-            className="px-6 py-3 bg-white text-emerald-700 rounded-xl text-sm font-semibold hover:bg-emerald-50 transition-colors"
+            className="px-6 py-3 bg-white text-brand-orange-600 rounded-xl text-sm font-semibold hover:bg-brand-orange-50 transition-colors"
           >
             + Posteaza acum
           </Link>

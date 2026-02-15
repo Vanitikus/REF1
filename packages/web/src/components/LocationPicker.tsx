@@ -75,7 +75,7 @@ export function LocationPicker({ value, coords, onChange }: LocationPickerProps)
       }).addTo(map);
 
       const icon = L.divIcon({
-        html: '<div style="width:32px;height:32px;background:#10b981;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:white;font-size:14px">\u{1F4CD}</div>',
+        html: '<div style="width:32px;height:32px;background:#2EC4B6;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:white;font-size:14px">\u{1F4CD}</div>',
         iconSize: [32, 32],
         iconAnchor: [16, 32],
         className: '',
@@ -116,7 +116,7 @@ export function LocationPicker({ value, coords, onChange }: LocationPickerProps)
           value={value}
           onChange={(e) => onChange(e.target.value, coords)}
           placeholder="ex: Parcul Herastrau, Sector 1, Bucuresti"
-          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
         />
       </div>
 
@@ -125,10 +125,10 @@ export function LocationPicker({ value, coords, onChange }: LocationPickerProps)
           type="button"
           onClick={handleUseCurrentLocation}
           disabled={loading}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-brand-teal-700 bg-brand-teal-50 border border-brand-teal-200 rounded-lg hover:bg-brand-teal-100 transition-colors disabled:opacity-50"
         >
           {loading ? (
-            <span className="w-3 h-3 border-2 border-emerald-300 border-t-emerald-600 rounded-full animate-spin" />
+            <span className="w-3 h-3 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
           ) : (
             <span>{'\u{1F4F1}'}</span>
           )}

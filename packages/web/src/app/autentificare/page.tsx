@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
+import { Logo } from '@/components/Logo';
 
 type Mode = 'login' | 'register' | 'reset';
 
@@ -73,12 +74,7 @@ export default function AuthPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <span className="text-3xl">{'\u{1F50D}'}</span>
-            <span className="text-2xl font-bold tracking-tight">
-              RE<span className="text-emerald-600">Fi</span>ND
-            </span>
-          </Link>
+          <Logo size="lg" />
           <p className="text-sm text-gray-500 mt-2">
             {mode === 'login' && 'Conecteaza-te la contul tau'}
             {mode === 'register' && 'Creeaza un cont nou'}
@@ -88,15 +84,15 @@ export default function AuthPage() {
 
         {/* Reset sent confirmation */}
         {resetSent && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 text-center">
+          <div className="bg-brand-orange-50 border border-brand-orange-200 rounded-xl p-4 mb-6 text-center">
             <span className="text-3xl block mb-2">{'\u{2709}'}</span>
-            <p className="text-sm text-emerald-800 font-medium">Email trimis!</p>
-            <p className="text-xs text-emerald-600 mt-1">
+            <p className="text-sm text-brand-orange-800 font-medium">Email trimis!</p>
+            <p className="text-xs text-brand-orange-500 mt-1">
               Verifica inbox-ul pentru linkul de resetare a parolei.
             </p>
             <button
               onClick={() => switchMode('login')}
-              className="text-sm text-emerald-700 font-medium mt-3 hover:underline"
+              className="text-sm text-brand-orange-600 font-medium mt-3 hover:underline"
             >
               Inapoi la login
             </button>
@@ -147,7 +143,7 @@ export default function AuthPage() {
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     placeholder="Ion Popescu"
-                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -160,7 +156,7 @@ export default function AuthPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="email@exemplu.ro"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -173,7 +169,7 @@ export default function AuthPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder={mode === 'register' ? 'Minim 6 caractere' : 'Parola ta'}
-                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -187,7 +183,7 @@ export default function AuthPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Repeta parola"
-                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -204,7 +200,7 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => switchMode('reset')}
-                    className="text-xs text-emerald-600 hover:text-emerald-700"
+                    className="text-xs text-brand-orange-500 hover:text-brand-orange-600"
                   >
                     Ai uitat parola?
                   </button>
@@ -214,7 +210,7 @@ export default function AuthPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 bg-brand-orange-500 text-white rounded-xl text-sm font-medium hover:bg-brand-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -236,7 +232,7 @@ export default function AuthPage() {
               {mode === 'login' && (
                 <>
                   Nu ai cont?{' '}
-                  <button onClick={() => switchMode('register')} className="text-emerald-600 font-medium hover:underline">
+                  <button onClick={() => switchMode('register')} className="text-brand-orange-500 font-medium hover:underline">
                     Inregistreaza-te
                   </button>
                 </>
@@ -244,13 +240,13 @@ export default function AuthPage() {
               {mode === 'register' && (
                 <>
                   Ai deja cont?{' '}
-                  <button onClick={() => switchMode('login')} className="text-emerald-600 font-medium hover:underline">
+                  <button onClick={() => switchMode('login')} className="text-brand-orange-500 font-medium hover:underline">
                     Conecteaza-te
                   </button>
                 </>
               )}
               {mode === 'reset' && (
-                <button onClick={() => switchMode('login')} className="text-emerald-600 font-medium hover:underline">
+                <button onClick={() => switchMode('login')} className="text-brand-orange-500 font-medium hover:underline">
                   Inapoi la login
                 </button>
               )}

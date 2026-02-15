@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Logo } from './Logo';
 
 export function Footer() {
   return (
@@ -7,12 +8,9 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2 mb-3">
-              <span className="text-xl">{'\u{1F50D}'}</span>
-              <span className="text-lg font-bold tracking-tight">
-                RE<span className="text-emerald-600">Fi</span>ND
-              </span>
-            </Link>
+            <div className="mb-3">
+              <Logo size="sm" />
+            </div>
             <p className="text-xs text-gray-500 leading-relaxed">
               Platforma civica pentru recuperarea obiectelor pierdute si gasite. The Waze of Lost & Found.
             </p>
@@ -29,7 +27,7 @@ export function Footer() {
                 { href: '/chat', label: 'Mesaje' },
               ].map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-700">{item.label}</Link>
+                  <Link href={item.href} className="text-sm text-gray-500 hover:text-brand-orange-500">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -46,7 +44,7 @@ export function Footer() {
                 { href: '/confidentialitate', label: 'Confidentialitate' },
               ].map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-gray-500 hover:text-gray-700">{item.label}</Link>
+                  <Link href={item.href} className="text-sm text-gray-500 hover:text-brand-orange-500">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -59,8 +57,8 @@ export function Footer() {
               <li>contact@refind.ro</li>
               <li>Bucuresti, Romania</li>
               <li className="flex gap-3 pt-2">
-                <span className="hover:text-gray-700 cursor-pointer">Facebook</span>
-                <span className="hover:text-gray-700 cursor-pointer">Instagram</span>
+                <span className="hover:text-brand-orange-500 cursor-pointer">Facebook</span>
+                <span className="hover:text-brand-orange-500 cursor-pointer">Instagram</span>
               </li>
             </ul>
           </div>
@@ -68,7 +66,7 @@ export function Footer() {
 
         <div className="border-t border-gray-100 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-gray-400">
-            &copy; 2026 REFiND. Toate drepturile rezervate.
+            &copy; 2026 ReFind. Toate drepturile rezervate.
           </p>
           <p className="text-xs text-gray-400">
             Facut cu {'\u{2764}'} in Bucuresti

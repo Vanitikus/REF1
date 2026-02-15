@@ -78,7 +78,7 @@ const INITIAL_NOTIFICATIONS: Notification[] = [
   {
     id: '7',
     type: 'system',
-    title: 'Bine ai venit pe REFiND!',
+    title: 'Bine ai venit pe ReFind!',
     body: 'Contul tau a fost creat cu succes. Completeaza-ti profilul pentru a primi mai multe match-uri.',
     time: 'acum 5 zile',
     isRead: true,
@@ -131,7 +131,7 @@ export default function NotificariPage() {
         {unread > 0 && (
           <button
             onClick={markAllRead}
-            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+            className="text-sm text-brand-orange-500 hover:text-brand-orange-600 font-medium"
           >
             Marcheaza toate ca citite
           </button>
@@ -146,7 +146,7 @@ export default function NotificariPage() {
             onClick={() => setFilter(f.key)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
               filter === f.key
-                ? 'bg-emerald-600 text-white'
+                ? 'bg-brand-orange-500 text-white'
                 : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
             }`}
           >
@@ -172,12 +172,12 @@ export default function NotificariPage() {
                 className={`flex gap-3 p-4 rounded-xl border transition-all group relative ${
                   notif.isRead
                     ? 'bg-white border-gray-100 hover:border-gray-200'
-                    : 'bg-emerald-50/50 border-emerald-200 hover:border-emerald-300'
+                    : 'bg-brand-orange-50 border-brand-orange-200 hover:border-brand-orange-300'
                 } hover:shadow-sm`}
                 onClick={() => markAsRead(notif.id)}
               >
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg shrink-0 ${
-                  notif.isRead ? 'bg-gray-100' : 'bg-emerald-100'
+                  notif.isRead ? 'bg-gray-100' : 'bg-brand-orange-100'
                 }`}>
                   {notif.emoji}
                 </div>
@@ -188,7 +188,7 @@ export default function NotificariPage() {
                     </h3>
                     <div className="flex items-center gap-2 shrink-0 ml-2">
                       {!notif.isRead && (
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span className="w-2 h-2 rounded-full bg-brand-orange-500" />
                       )}
                     </div>
                   </div>
@@ -196,7 +196,7 @@ export default function NotificariPage() {
                   <div className="flex items-center gap-3 mt-1.5">
                     <p className="text-[10px] text-gray-400">{notif.time}</p>
                     <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${
-                      notif.type === 'match' ? 'bg-emerald-100 text-emerald-600' :
+                      notif.type === 'match' ? 'bg-brand-orange-100 text-brand-orange-500' :
                       notif.type === 'message' ? 'bg-blue-100 text-blue-600' :
                       notif.type === 'alert' ? 'bg-amber-100 text-amber-600' :
                       notif.type === 'reward' ? 'bg-amber-100 text-amber-600' :

@@ -38,6 +38,9 @@
   .dark .bg-white\/95 {
     background-color: rgba(17, 24, 39, 0.95);
   }
+  .dark .bg-refind-light {
+    background-color: #111827;
+  }
   .dark input,
   .dark textarea,
   .dark select {

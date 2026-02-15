@@ -31,7 +31,7 @@ export default function ProfilPage() {
   if (isLoading) {
     return (
       <div className="py-20 flex justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand-orange-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -44,7 +44,7 @@ export default function ProfilPage() {
         <p className="text-gray-500 mb-6">Trebuie sa fii autentificat pentru a vedea profilul.</p>
         <Link
           href="/autentificare"
-          className="inline-block px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors"
+          className="inline-block px-6 py-2.5 bg-brand-orange-500 text-white rounded-xl text-sm font-medium hover:bg-brand-orange-600 transition-colors"
         >
           Login / Inregistrare
         </Link>
@@ -93,14 +93,14 @@ export default function ProfilPage() {
       {/* Profile header */}
       <div className="bg-white rounded-2xl border border-gray-200 p-6">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center text-2xl font-bold shrink-0">
+          <div className="w-16 h-16 rounded-full bg-brand-teal-400 text-white flex items-center justify-center text-2xl font-bold shrink-0">
             {user.avatarInitial}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h1 className="text-xl font-bold">{user.displayName}</h1>
               {user.isVerified && (
-                <span className="bg-emerald-100 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                <span className="bg-brand-teal-100 text-brand-teal-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">
                   {'\u2713'} Verificat
                 </span>
               )}
@@ -117,9 +117,9 @@ export default function ProfilPage() {
         </div>
 
         <div className="grid grid-cols-3 gap-3 mt-6">
-          <div className="bg-emerald-50 rounded-xl p-3 text-center">
-            <div className="text-xl font-bold text-emerald-700">{user.communityScore}</div>
-            <div className="text-[11px] text-emerald-600">Scor comunitate</div>
+          <div className="bg-brand-teal-50 rounded-xl p-3 text-center">
+            <div className="text-xl font-bold text-brand-teal-700">{user.communityScore}</div>
+            <div className="text-[11px] text-brand-orange-500">Scor comunitate</div>
           </div>
           <div className="bg-blue-50 rounded-xl p-3 text-center">
             <div className="text-xl font-bold text-blue-700">5</div>
@@ -133,7 +133,7 @@ export default function ProfilPage() {
 
         {/* Quick links */}
         <div className="flex gap-2 mt-4">
-          <Link href="/postarile-mele" className="flex-1 text-center py-2 text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors">
+          <Link href="/postarile-mele" className="flex-1 text-center py-2 text-xs font-medium text-brand-teal-700 bg-brand-teal-50 rounded-lg hover:bg-brand-teal-100 transition-colors">
             {'\u{1F4DD}'} Postarile mele
           </Link>
           <Link href="/matchuri" className="flex-1 text-center py-2 text-xs font-medium text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
@@ -177,7 +177,7 @@ export default function ProfilPage() {
             onClick={() => setTab(t.key)}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               tab === t.key
-                ? 'border-emerald-600 text-emerald-700'
+                ? 'border-brand-orange-500 text-brand-teal-700'
                 : 'border-transparent text-gray-400 hover:text-gray-600'
             }`}
           >
@@ -192,7 +192,7 @@ export default function ProfilPage() {
             <div className="text-center py-12 text-gray-400">
               <span className="text-4xl block mb-3">{'\u{1F4DD}'}</span>
               <p className="text-sm">Nu ai nicio postare inca.</p>
-              <Link href="/posteaza" className="text-emerald-600 text-sm mt-2 inline-block hover:underline">
+              <Link href="/posteaza" className="text-brand-orange-500 text-sm mt-2 inline-block hover:underline">
                 Creeaza prima postare
               </Link>
             </div>
@@ -205,7 +205,7 @@ export default function ProfilPage() {
                   className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-200 hover:shadow-sm transition-shadow"
                 >
                   <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl shrink-0 ${
-                    post.type === 'lost' ? 'bg-red-50' : 'bg-emerald-50'
+                    post.type === 'lost' ? 'bg-red-50' : 'bg-brand-teal-50'
                   }`}>
                     {post.imageEmoji}
                   </div>
@@ -214,7 +214,7 @@ export default function ProfilPage() {
                     <p className="text-xs text-gray-500 mt-0.5">{post.locationName}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-full ${
-                        post.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+                        post.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-brand-teal-100 text-brand-teal-700'
                       }`}>
                         {post.type === 'lost' ? 'Pierdut' : 'Gasit'}
                       </span>
@@ -224,12 +224,12 @@ export default function ProfilPage() {
                   <div className="text-right shrink-0">
                     <div className="text-xs text-gray-400">{post.viewCount} vizualizari</div>
                     {post.matchCount > 0 && (
-                      <div className="text-xs text-emerald-600 font-medium">{post.matchCount} match-uri</div>
+                      <div className="text-xs text-brand-orange-500 font-medium">{post.matchCount} match-uri</div>
                     )}
                   </div>
                 </Link>
               ))}
-              <Link href="/postarile-mele" className="block text-center text-sm text-emerald-600 font-medium hover:underline py-2">
+              <Link href="/postarile-mele" className="block text-center text-sm text-brand-orange-500 font-medium hover:underline py-2">
                 Vezi toate postarile {'\u2192'}
               </Link>
             </>
@@ -243,16 +243,16 @@ export default function ProfilPage() {
             <Link
               key={post.id}
               href={`/post/${post.id}`}
-              className="flex items-center gap-3 bg-white rounded-xl p-4 border border-emerald-200 hover:shadow-sm transition-shadow"
+              className="flex items-center gap-3 bg-white rounded-xl p-4 border border-brand-teal-200 hover:shadow-sm transition-shadow"
             >
-              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-2xl shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-brand-teal-50 flex items-center justify-center text-2xl shrink-0">
                 {post.imageEmoji}
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold truncate">{post.title}</h3>
                 <p className="text-xs text-gray-500">{post.locationName}</p>
               </div>
-              <span className="text-xs font-semibold uppercase px-2 py-1 rounded-full bg-emerald-100 text-emerald-700">
+              <span className="text-xs font-semibold uppercase px-2 py-1 rounded-full bg-brand-teal-100 text-brand-teal-700">
                 {'\u2713'} Rezolvat
               </span>
             </Link>
@@ -276,7 +276,7 @@ export default function ProfilPage() {
               <button
                 onClick={() => toggleSetting(setting.key)}
                 className={`w-11 h-6 rounded-full p-0.5 transition-colors ${
-                  settings[setting.key] ? 'bg-emerald-600' : 'bg-gray-300'
+                  settings[setting.key] ? 'bg-brand-teal-400' : 'bg-gray-300'
                 }`}
               >
                 <div className={`w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${
@@ -314,7 +314,7 @@ export default function ProfilPage() {
 
             <button
               onClick={() => setShowZoneModal(true)}
-              className="w-full py-2 text-sm text-emerald-600 font-medium border border-emerald-200 rounded-lg hover:bg-emerald-50 transition-colors"
+              className="w-full py-2 text-sm text-brand-orange-500 font-medium border border-brand-orange-200 rounded-lg hover:bg-brand-orange-50 transition-colors"
             >
               + Adauga zona noua
             </button>
@@ -347,7 +347,7 @@ export default function ProfilPage() {
 
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-20 h-20 rounded-full bg-emerald-600 text-white flex items-center justify-center text-3xl font-bold">
+                <div className="w-20 h-20 rounded-full bg-brand-teal-400 text-white flex items-center justify-center text-3xl font-bold">
                   {user.avatarInitial}
                 </div>
                 <button className="absolute bottom-0 right-0 w-7 h-7 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center text-xs hover:bg-gray-50">
@@ -361,7 +361,7 @@ export default function ProfilPage() {
               <input
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
               />
             </div>
 
@@ -372,7 +372,7 @@ export default function ProfilPage() {
                 onChange={(e) => setEditBio(e.target.value)}
                 placeholder="Spune ceva despre tine..."
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 resize-none"
                 maxLength={200}
               />
             </div>
@@ -396,7 +396,7 @@ export default function ProfilPage() {
               </button>
               <button
                 onClick={() => setShowEditModal(false)}
-                className="flex-1 py-2.5 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700"
+                className="flex-1 py-2.5 text-sm font-medium text-white bg-brand-orange-500 rounded-xl hover:bg-brand-orange-600"
               >
                 Salveaza
               </button>
@@ -428,7 +428,7 @@ export default function ProfilPage() {
                 max={10}
                 value={zoneRadius}
                 onChange={(e) => setZoneRadius(Number(e.target.value))}
-                className="w-full accent-emerald-600"
+                className="w-full accent-brand-orange-500"
               />
               <div className="flex justify-between text-[10px] text-gray-400">
                 <span>1 km</span>
@@ -450,7 +450,7 @@ export default function ProfilPage() {
                     onClick={() => toggleZoneCategory(cat.key)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                       zoneCategories.includes(cat.key)
-                        ? 'bg-emerald-100 text-emerald-700 border border-emerald-300'
+                        ? 'bg-brand-teal-100 text-brand-teal-700 border border-brand-teal-300'
                         : 'bg-gray-100 text-gray-500 border border-gray-200'
                     }`}
                   >
@@ -470,7 +470,7 @@ export default function ProfilPage() {
               <button
                 onClick={addZone}
                 disabled={zoneCategories.length === 0}
-                className="flex-1 py-2.5 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 disabled:opacity-50"
+                className="flex-1 py-2.5 text-sm font-medium text-white bg-brand-orange-500 rounded-xl hover:bg-brand-orange-600 disabled:opacity-50"
               >
                 Adauga zona
               </button>

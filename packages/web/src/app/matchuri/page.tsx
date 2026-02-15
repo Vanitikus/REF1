@@ -160,18 +160,18 @@ function MatchCard({
   onReject: () => void;
 }) {
   const scoreColor =
-    match.score >= 80 ? 'text-emerald-600 bg-emerald-50 border-emerald-200' :
+    match.score >= 80 ? 'text-brand-teal-600 bg-brand-teal-50 border-brand-teal-200' :
     match.score >= 60 ? 'text-amber-600 bg-amber-50 border-amber-200' :
     'text-gray-600 bg-gray-50 border-gray-200';
 
   const scoreBg =
-    match.score >= 80 ? 'bg-emerald-500' :
+    match.score >= 80 ? 'bg-brand-teal-400' :
     match.score >= 60 ? 'bg-amber-500' :
     'bg-gray-400';
 
   return (
     <div className={`border rounded-2xl overflow-hidden transition-all ${
-      match.status === 'confirmed' ? 'border-emerald-200 bg-emerald-50/30' :
+      match.status === 'confirmed' ? 'border-brand-teal-200 bg-brand-teal-50' :
       match.status === 'rejected' ? 'border-gray-200 bg-gray-50/50 opacity-60' :
       'border-gray-200 bg-white'
     }`}>
@@ -190,7 +190,7 @@ function MatchCard({
             <span className="text-xs truncate text-gray-700">{match.lostPost.title}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Gasit</span>
+            <span className="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-brand-teal-100 text-brand-teal-700">Gasit</span>
             <span className="text-xs truncate text-gray-700">{match.foundPost.title}</span>
           </div>
         </div>
@@ -201,7 +201,7 @@ function MatchCard({
             <span className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-medium">In asteptare</span>
           )}
           {match.status === 'confirmed' && (
-            <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-medium">{'\u2713'} Confirmat</span>
+            <span className="text-xs bg-brand-teal-100 text-brand-teal-700 px-2 py-1 rounded-full font-medium">{'\u2713'} Confirmat</span>
           )}
           {match.status === 'rejected' && (
             <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-medium">{'\u2715'} Respins</span>
@@ -230,7 +230,7 @@ function MatchCard({
                   <div className="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
-                        signal.score >= 80 ? 'bg-emerald-500' : signal.score >= 60 ? 'bg-amber-500' : 'bg-red-400'
+                        signal.score >= 80 ? 'bg-brand-teal-400' : signal.score >= 60 ? 'bg-amber-500' : 'bg-red-400'
                       }`}
                       style={{ width: `${signal.score}%` }}
                     />
@@ -270,16 +270,16 @@ function MatchCard({
               </Link>
               <button
                 onClick={onConfirm}
-                className="flex-1 py-2.5 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 transition-colors"
+                className="flex-1 py-2.5 text-sm font-medium text-white bg-brand-orange-500 rounded-xl hover:bg-brand-orange-600 transition-colors"
               >
                 {'\u2713'} Confirma match
               </button>
             </div>
           )}
           {match.status === 'confirmed' && (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
-              <p className="text-sm text-emerald-700 font-medium">{'\u{1F389}'} Match confirmat! Contacteaza celalalt utilizator in chat.</p>
-              <Link href="/chat" className="inline-block mt-2 text-xs text-emerald-600 font-medium hover:underline">
+            <div className="bg-brand-teal-50 border border-brand-teal-200 rounded-xl p-3 text-center">
+              <p className="text-sm text-brand-teal-700 font-medium">{'\u{1F389}'} Match confirmat! Contacteaza celalalt utilizator in chat.</p>
+              <Link href="/chat" className="inline-block mt-2 text-xs text-brand-orange-500 font-medium hover:underline">
                 Deschide conversatia {'\u2192'}
               </Link>
             </div>
@@ -296,16 +296,16 @@ function PostMiniCard({ post, type }: { post: typeof MOCK_POSTS[0]; type: 'lost'
   return (
     <Link href={`/post/${post.id}`} className="block">
       <div className={`rounded-xl border p-3 hover:shadow-sm transition-shadow ${
-        isLost ? 'border-red-200 bg-red-50/50' : 'border-emerald-200 bg-emerald-50/50'
+        isLost ? 'border-red-200 bg-red-50/50' : 'border-brand-teal-200 bg-brand-teal-50'
       }`}>
         <div className={`w-full h-20 rounded-lg flex items-center justify-center text-3xl mb-2 ${
-          isLost ? 'bg-red-100' : 'bg-emerald-100'
+          isLost ? 'bg-red-100' : 'bg-brand-teal-100'
         }`}>
           {post.imageEmoji}
         </div>
         <div className="flex items-center gap-1 mb-1">
           <span className="text-xs">{CATEGORY_EMOJI[post.category]}</span>
-          <span className={`text-[10px] font-semibold uppercase ${isLost ? 'text-red-600' : 'text-emerald-600'}`}>
+          <span className={`text-[10px] font-semibold uppercase ${isLost ? 'text-red-600' : 'text-brand-orange-500'}`}>
             {isLost ? 'Pierdut' : 'Gasit'}
           </span>
         </div>

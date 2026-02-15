@@ -57,7 +57,7 @@ export default function MapView() {
 
     // Create custom icon
     const createIcon = (type: 'lost' | 'found', emoji: string) => {
-      const color = type === 'lost' ? '#EF4444' : '#10B981';
+      const color = type === 'lost' ? '#EF4444' : '#2EC4B6';
       return L!.divIcon({
         className: 'custom-pin',
         html: `<div style="
@@ -94,7 +94,7 @@ export default function MapView() {
     return (
       <div className="h-[calc(100vh-8rem)] flex items-center justify-center bg-gray-100 rounded-2xl">
         <div className="text-center text-gray-400">
-          <div className="animate-spin w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full mx-auto mb-3" />
+          <div className="animate-spin w-8 h-8 border-2 border-brand-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
           <p className="text-sm">Se incarca harta...</p>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function MapView() {
             onClick={() => { setFilter(f); setSelected(null); }}
             className={`px-3 py-1.5 rounded-full text-xs font-medium shadow-md transition-colors ${
               filter === f
-                ? 'bg-emerald-600 text-white'
+                ? 'bg-brand-orange-500 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -127,7 +127,7 @@ export default function MapView() {
           <span className="text-gray-600">Pierdut</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-emerald-500" />
+          <span className="w-3 h-3 rounded-full bg-brand-teal-400" />
           <span className="text-gray-600">Gasit</span>
         </div>
       </div>
@@ -150,7 +150,7 @@ export default function MapView() {
           </button>
           <div className="flex items-center gap-2 mb-2">
             <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${
-              selected.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+              selected.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-brand-teal-100 text-brand-teal-700'
             }`}>
               {selected.type === 'lost' ? 'Pierdut' : 'Gasit'}
             </span>
@@ -159,7 +159,7 @@ export default function MapView() {
           </div>
           <div className="flex gap-3 mb-2">
             <div className={`w-14 h-14 rounded-lg flex items-center justify-center text-2xl shrink-0 ${
-              selected.type === 'lost' ? 'bg-red-50' : 'bg-emerald-50'
+              selected.type === 'lost' ? 'bg-red-50' : 'bg-brand-teal-50'
             }`}>
               {selected.imageEmoji}
             </div>
@@ -175,7 +175,7 @@ export default function MapView() {
           )}
           <Link
             href={`/post/${selected.id}`}
-            className="block w-full text-center bg-emerald-600 text-white text-xs font-medium px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+            className="block w-full text-center bg-brand-orange-500 text-white text-xs font-medium px-4 py-2 rounded-lg hover:bg-brand-orange-600 transition-colors"
           >
             Vezi detalii
           </Link>

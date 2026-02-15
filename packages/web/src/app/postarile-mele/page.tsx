@@ -41,7 +41,7 @@ export default function PostarileMelePage() {
       <div className="py-20 text-center">
         <span className="text-5xl block mb-4">{'\u{1F512}'}</span>
         <p className="text-lg font-medium text-gray-700 mb-2">Trebuie sa fii autentificat</p>
-        <Link href="/autentificare" className="text-emerald-600 text-sm hover:underline">
+        <Link href="/autentificare" className="text-brand-orange-500 text-sm hover:underline">
           Autentifica-te {'\u2192'}
         </Link>
       </div>
@@ -72,7 +72,7 @@ export default function PostarileMelePage() {
   };
 
   const statusLabels: Record<PostStatus, { label: string; class: string }> = {
-    active: { label: 'Activa', class: 'bg-emerald-100 text-emerald-700' },
+    active: { label: 'Activa', class: 'bg-brand-teal-100 text-brand-teal-700' },
     resolved: { label: 'Rezolvata', class: 'bg-blue-100 text-blue-700' },
     expired: { label: 'Expirata', class: 'bg-gray-100 text-gray-500' },
   };
@@ -86,7 +86,7 @@ export default function PostarileMelePage() {
         </div>
         <Link
           href="/posteaza"
-          className="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors"
+          className="bg-brand-orange-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-brand-orange-600 transition-colors"
         >
           + Postare noua
         </Link>
@@ -99,7 +99,7 @@ export default function PostarileMelePage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
-              filter === f ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              filter === f ? 'bg-brand-orange-100 text-brand-orange-600' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
             }`}
           >
             {f === 'all' ? `Toate (${posts.length})` : `${statusLabels[f].label} (${posts.filter((p) => p.status === f).length})`}
@@ -112,7 +112,7 @@ export default function PostarileMelePage() {
         <div className="text-center py-16 text-gray-400">
           <span className="text-5xl block mb-4">{'\u{1F4ED}'}</span>
           <p className="text-lg font-medium">Nicio postare</p>
-          <Link href="/posteaza" className="text-emerald-600 text-sm mt-2 inline-block hover:underline">
+          <Link href="/posteaza" className="text-brand-orange-500 text-sm mt-2 inline-block hover:underline">
             Creeaza prima postare {'\u2192'}
           </Link>
         </div>
@@ -123,7 +123,7 @@ export default function PostarileMelePage() {
               {/* Post row */}
               <div className="p-4 flex items-start gap-3">
                 <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl shrink-0 ${
-                  post.type === 'lost' ? 'bg-red-50' : 'bg-emerald-50'
+                  post.type === 'lost' ? 'bg-red-50' : 'bg-brand-teal-50'
                 }`}>
                   {post.imageEmoji}
                 </div>
@@ -133,12 +133,12 @@ export default function PostarileMelePage() {
                       <input
                         value={editTitle}
                         onChange={(e) => setEditTitle(e.target.value)}
-                        className="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
                         autoFocus
                       />
                       <button
                         onClick={() => handleEditSave(post.id)}
-                        className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium"
+                        className="px-3 py-1.5 bg-brand-orange-500 text-white rounded-lg text-xs font-medium"
                       >
                         Salveaza
                       </button>
@@ -152,13 +152,13 @@ export default function PostarileMelePage() {
                   ) : (
                     <>
                       <div className="flex items-center gap-2 mb-1">
-                        <Link href={`/post/${post.id}`} className="text-sm font-semibold hover:text-emerald-600 truncate">
+                        <Link href={`/post/${post.id}`} className="text-sm font-semibold hover:text-brand-orange-500 truncate">
                           {post.title}
                         </Link>
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded ${
-                          post.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+                          post.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-brand-teal-100 text-brand-teal-700'
                         }`}>
                           {post.type === 'lost' ? 'Pierdut' : 'Gasit'}
                         </span>
@@ -195,7 +195,7 @@ export default function PostarileMelePage() {
                 {post.status === 'active' && (
                   <button
                     onClick={() => handleStatusChange(post.id, 'resolved')}
-                    className="text-xs text-emerald-600 hover:text-emerald-700 px-2 py-1 rounded hover:bg-emerald-50 transition-colors"
+                    className="text-xs text-brand-orange-500 hover:text-brand-orange-600 px-2 py-1 rounded hover:bg-brand-orange-50 transition-colors"
                   >
                     {'\u2713'} Marcheaza rezolvat
                   </button>

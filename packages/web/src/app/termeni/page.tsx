@@ -8,7 +8,7 @@ export default function TermeniPage() {
         <section>
           <h2 className="text-lg font-bold mb-2">1. Acceptarea termenilor</h2>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Prin accesarea si utilizarea platformei REFiND, acceptati sa respectati acesti termeni si conditii.
+            Prin accesarea si utilizarea platformei ReFind, acceptati sa respectati acesti termeni si conditii.
             Daca nu sunteti de acord cu oricare dintre aceste prevederi, va rugam sa nu utilizati platforma.
           </p>
         </section>
@@ -16,7 +16,7 @@ export default function TermeniPage() {
         <section>
           <h2 className="text-lg font-bold mb-2">2. Descrierea serviciului</h2>
           <p className="text-sm text-gray-600 leading-relaxed">
-            REFiND este o platforma civica online care faciliteaza conectarea persoanelor care au pierdut obiecte
+            ReFind este o platforma civica online care faciliteaza conectarea persoanelor care au pierdut obiecte
             cu cele care le-au gasit. Platforma ofera instrumente de postare, cautare, matching automat prin AI
             si comunicare intre utilizatori.
           </p>
@@ -47,7 +47,7 @@ export default function TermeniPage() {
           <h2 className="text-lg font-bold mb-2">5. Continut generat de utilizatori</h2>
           <p className="text-sm text-gray-600 leading-relaxed">
             Utilizatorii isi pastreaza drepturile de proprietate intelectuala asupra continutului postat.
-            Prin postare, acordati REFiND o licenta non-exclusiva de a afisa continutul pe platforma.
+            Prin postare, acordati ReFind o licenta non-exclusiva de a afisa continutul pe platforma.
             Ne rezervam dreptul de a sterge continut care incalca acesti termeni.
           </p>
         </section>
@@ -55,7 +55,7 @@ export default function TermeniPage() {
         <section>
           <h2 className="text-lg font-bold mb-2">6. Limitarea raspunderii</h2>
           <p className="text-sm text-gray-600 leading-relaxed">
-            REFiND este un intermediar si nu garanteaza recuperarea obiectelor pierdute. Nu suntem
+            ReFind este un intermediar si nu garanteaza recuperarea obiectelor pierdute. Nu suntem
             responsabili pentru tranzactiile, intalnirile sau acordurile intre utilizatori. Va recomandam
             sa luati masuri de precautie la intalnirile in persoana.
           </p>

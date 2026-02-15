@@ -36,7 +36,7 @@ export function FilterBar({ onTypeChange, onCategoryChange, activeType, activeCa
             onClick={() => onTypeChange(key)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               activeType === key
-                ? 'bg-emerald-600 text-white'
+                ? 'bg-brand-orange-500 text-white'
                 : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
             }`}
           >

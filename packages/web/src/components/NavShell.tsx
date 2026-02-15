@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/lib/theme-context';
+import { Logo } from './Logo';
 import { Footer } from './Footer';
 
 const NAV_ITEMS: { href: string; icon: string; label: string; isFab?: boolean }[] = [
@@ -47,12 +48,7 @@ function Header({ pathname }: { pathname: string }) {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl">{'\u{1F50D}'}</span>
-          <span className="text-xl font-bold tracking-tight">
-            RE<span className="text-emerald-600">Fi</span>ND
-          </span>
-        </Link>
+        <Logo size="sm" />
 
         {/* Desktop nav */}
         <nav className="hidden sm:flex items-center gap-1">
@@ -63,7 +59,7 @@ function Header({ pathname }: { pathname: string }) {
                 key={item.href}
                 href={item.href}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  active ? 'bg-emerald-50 text-emerald-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                  active ? 'bg-brand-orange-50 text-brand-orange-600' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 {item.label}
@@ -92,7 +88,7 @@ function Header({ pathname }: { pathname: string }) {
 
           <Link
             href="/posteaza"
-            className="hidden sm:flex items-center gap-1.5 bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-700 transition-colors"
+            className="hidden sm:flex items-center gap-1.5 bg-brand-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-brand-orange-600 transition-colors"
           >
             + Posteaza
           </Link>
@@ -112,14 +108,14 @@ function Header({ pathname }: { pathname: string }) {
 
           {isAuthenticated && user ? (
             <Link href="/profil">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-semibold">
+              <div className="w-8 h-8 rounded-full bg-brand-teal-400 text-white flex items-center justify-center text-sm font-semibold">
                 {user.avatarInitial}
               </div>
             </Link>
           ) : (
             <Link
               href="/autentificare"
-              className="text-sm text-emerald-600 font-medium hover:text-emerald-700"
+              className="text-sm text-brand-orange-500 font-medium hover:text-brand-orange-600"
             >
               Login
             </Link>
@@ -138,7 +134,7 @@ function BottomNav({ pathname }: { pathname: string }) {
           if (item.isFab) {
             return (
               <Link key={item.href} href={item.href}>
-                <div className="w-14 h-14 -mt-5 rounded-full bg-emerald-600 text-white shadow-lg flex items-center justify-center text-2xl font-light hover:bg-emerald-700 transition-colors">
+                <div className="w-14 h-14 -mt-5 rounded-full bg-brand-orange-500 text-white shadow-lg flex items-center justify-center text-2xl font-light hover:bg-brand-orange-600 transition-colors">
                   +
                 </div>
               </Link>
@@ -146,7 +142,7 @@ function BottomNav({ pathname }: { pathname: string }) {
           }
           const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
           return (
-            <Link key={item.href} href={item.href} className={`flex flex-col items-center gap-0.5 ${active ? 'text-emerald-600' : 'text-gray-400'}`}>
+            <Link key={item.href} href={item.href} className={`flex flex-col items-center gap-0.5 ${active ? 'text-brand-orange-500' : 'text-gray-400'}`}>
               <span className="text-xl">{item.icon}</span>
               <span className="text-[10px] font-medium">{item.label}</span>
             </Link>

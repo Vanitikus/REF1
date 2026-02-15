@@ -51,7 +51,7 @@ export default function SearchPage() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Cauta obiect pierdut sau gasit..."
           autoFocus
-          className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-base focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+          className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl text-base focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent shadow-sm"
         />
         {query && (
           <button
@@ -95,8 +95,8 @@ export default function SearchPage() {
                 ? t === 'lost'
                   ? 'bg-red-100 text-red-700'
                   : t === 'found'
-                    ? 'bg-emerald-100 text-emerald-700'
-                    : 'bg-emerald-600 text-white'
+                    ? 'bg-brand-teal-100 text-brand-teal-700'
+                    : 'bg-brand-orange-500 text-white'
                 : 'bg-white text-gray-600 border border-gray-200'
             }`}
           >

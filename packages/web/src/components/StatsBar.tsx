@@ -1,18 +1,18 @@
 export function StatsBar() {
   return (
     <div className="grid grid-cols-3 gap-3">
-      <StatCard value="1,247" label="Obiecte recuperate" color="emerald" />
+      <StatCard value="1,247" label="Obiecte recuperate" color="teal" />
       <StatCard value="3,891" label="Posturi active" color="blue" />
-      <StatCard value="89%" label="Rata de succes" color="amber" />
+      <StatCard value="89%" label="Rata de succes" color="orange" />
     </div>
   );
 }
 
 function StatCard({ value, label, color }: { value: string; label: string; color: string }) {
   const colorMap: Record<string, string> = {
-    emerald: 'bg-emerald-50 text-emerald-700',
+    teal: 'bg-brand-teal-50 text-brand-teal-700',
     blue: 'bg-blue-50 text-blue-700',
-    amber: 'bg-amber-50 text-amber-700',
+    orange: 'bg-brand-orange-50 text-brand-orange-700',
   };
 
   return (

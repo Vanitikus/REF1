@@ -42,17 +42,17 @@ export default function PosteazaPage() {
   if (submitted) {
     return (
       <div className="py-20 text-center max-w-md mx-auto">
-        <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+        <div className="w-20 h-20 bg-brand-teal-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
           {'\u2705'}
         </div>
         <h1 className="text-2xl font-bold mb-2">Postare creata!</h1>
         <p className="text-gray-500 mb-6">
           Postarea ta a fost publicata cu succes. Algoritmul nostru AI va cauta match-uri automat.
         </p>
-        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 text-left">
+        <div className="bg-brand-teal-50 border border-brand-teal-200 rounded-xl p-4 mb-6 text-left">
           <div className="flex items-center gap-2 mb-1">
             <span className={`text-xs font-semibold uppercase px-2 py-0.5 rounded-full ${
-              postType === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+              postType === 'lost' ? 'bg-red-100 text-red-700' : 'bg-brand-teal-100 text-brand-teal-700'
             }`}>
               {postType === 'lost' ? 'Pierdut' : 'Gasit'}
             </span>
@@ -86,7 +86,7 @@ export default function PosteazaPage() {
               setReward('');
               setImages([]);
             }}
-            className="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors"
+            className="px-6 py-2.5 bg-brand-orange-500 text-white rounded-xl text-sm font-medium hover:bg-brand-orange-600 transition-colors"
           >
             Posteaza din nou
           </button>
@@ -114,7 +114,7 @@ export default function PosteazaPage() {
           <div
             key={i}
             className={`h-1 rounded-full flex-1 transition-colors ${
-              i < step ? 'bg-emerald-600' : 'bg-gray-200'
+              i < step ? 'bg-brand-orange-500' : 'bg-gray-200'
             }`}
           />
         ))}
@@ -142,7 +142,7 @@ export default function PosteazaPage() {
                 onClick={() => setPostType('found')}
                 className={`p-4 rounded-xl border-2 text-left transition-all ${
                   postType === 'found'
-                    ? 'border-emerald-500 bg-emerald-50'
+                    ? 'border-brand-teal-400 bg-brand-teal-50'
                     : 'border-gray-200 bg-white hover:border-gray-300'
                 }`}
               >
@@ -162,7 +162,7 @@ export default function PosteazaPage() {
                   onClick={() => setCategory(cat.key)}
                   className={`p-4 rounded-xl border-2 text-left transition-all ${
                     category === cat.key
-                      ? 'border-emerald-500 bg-emerald-50'
+                      ? 'border-brand-teal-400 bg-brand-teal-50'
                       : 'border-gray-200 bg-white hover:border-gray-300'
                   }`}
                 >
@@ -188,7 +188,7 @@ export default function PosteazaPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder={postType === 'lost' ? 'ex: Catel labrador pierdut in Herastrau' : 'ex: Portofel maro gasit in metrou'}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
               maxLength={200}
             />
             <p className="text-[11px] text-gray-400 mt-1">{title.length}/200 caractere</p>
@@ -203,7 +203,7 @@ export default function PosteazaPage() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Descrie obiectul cat mai detaliat: culoare, marime, semne distinctive, imprejurari..."
               rows={4}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent resize-none"
               maxLength={2000}
             />
             <p className="text-[11px] text-gray-400 mt-1">{description.length}/2000 caractere</p>
@@ -235,7 +235,7 @@ export default function PosteazaPage() {
                   value={reward}
                   onChange={(e) => setReward(e.target.value)}
                   placeholder="ex: 200"
-                  className="w-full pl-10 pr-16 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full pl-10 pr-16 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">RON</span>
               </div>
@@ -258,7 +258,7 @@ export default function PosteazaPage() {
             <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
               <div className="flex items-center gap-2">
                 <span className={`text-xs font-semibold uppercase px-2 py-0.5 rounded-full ${
-                  postType === 'lost' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+                  postType === 'lost' ? 'bg-red-100 text-red-700' : 'bg-brand-teal-100 text-brand-teal-700'
                 }`}>
                   {postType === 'lost' ? 'Pierdut' : 'Gasit'}
                 </span>
@@ -307,7 +307,7 @@ export default function PosteazaPage() {
           disabled={!canNext()}
           className={`flex-1 py-3 rounded-xl text-sm font-medium transition-colors ${
             canNext()
-              ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+              ? 'bg-brand-orange-500 text-white hover:bg-brand-orange-600'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >

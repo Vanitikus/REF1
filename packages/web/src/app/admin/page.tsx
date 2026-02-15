@@ -29,7 +29,7 @@ export default function AdminPage() {
       <div className="py-20 text-center">
         <span className="text-5xl block mb-4">{'\u{1F512}'}</span>
         <p className="text-lg font-medium">Acces restrictionat</p>
-        <Link href="/autentificare" className="text-emerald-600 text-sm mt-2 inline-block hover:underline">
+        <Link href="/autentificare" className="text-brand-orange-500 text-sm mt-2 inline-block hover:underline">
           Conecteaza-te
         </Link>
       </div>
@@ -41,7 +41,7 @@ export default function AdminPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold">Admin Dashboard</h1>
-          <p className="text-sm text-gray-500">Gestioneaza platforma REFiND</p>
+          <p className="text-sm text-gray-500">Gestioneaza platforma ReFind</p>
         </div>
         <span className="bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full">
           {user.role}
@@ -52,7 +52,7 @@ export default function AdminPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: 'Utilizatori', value: '2,847', change: '+12%', color: 'blue' },
-          { label: 'Postari active', value: '3,891', change: '+8%', color: 'emerald' },
+          { label: 'Postari active', value: '3,891', change: '+8%', color: 'teal' },
           { label: 'Match-uri azi', value: '47', change: '+23%', color: 'amber' },
           { label: 'Rapoarte noi', value: '3', change: '', color: 'red' },
         ].map((stat) => (
@@ -60,7 +60,7 @@ export default function AdminPage() {
             <p className="text-xs text-gray-500">{stat.label}</p>
             <p className="text-2xl font-bold mt-1">{stat.value}</p>
             {stat.change && (
-              <p className="text-xs text-emerald-600 mt-0.5">{stat.change} vs saptamana trecuta</p>
+              <p className="text-xs text-brand-orange-500 mt-0.5">{stat.change} vs saptamana trecuta</p>
             )}
           </div>
         ))}
@@ -95,16 +95,16 @@ export default function AdminPage() {
             <div className="flex items-end gap-2 h-32">
               {[45, 62, 38, 75, 53, 89, 67].map((v, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                  <div className="w-full bg-emerald-200 rounded-t" style={{ height: `${v}%` }}>
-                    <div className="w-full bg-emerald-500 rounded-t" style={{ height: `${Math.random() * 60 + 20}%` }} />
+                  <div className="w-full bg-brand-teal-200 rounded-t" style={{ height: `${v}%` }}>
+                    <div className="w-full bg-brand-teal-400 rounded-t" style={{ height: `${Math.random() * 60 + 20}%` }} />
                   </div>
                   <span className="text-[10px] text-gray-400">{['L', 'M', 'M', 'J', 'V', 'S', 'D'][i]}</span>
                 </div>
               ))}
             </div>
             <div className="flex gap-4 mt-3 text-xs text-gray-400">
-              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-emerald-500 rounded" />Postari noi</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-emerald-200 rounded" />Match-uri</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-brand-teal-400 rounded" />Postari noi</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-brand-teal-200 rounded" />Match-uri</span>
             </div>
           </div>
 
@@ -130,7 +130,7 @@ export default function AdminPage() {
             <h3 className="text-sm font-semibold mb-3">Distributie categorii</h3>
             <div className="space-y-2">
               {[
-                { label: 'Animale', pct: 42, color: 'bg-emerald-500' },
+                { label: 'Animale', pct: 42, color: 'bg-brand-teal-400' },
                 { label: 'Obiecte', pct: 31, color: 'bg-blue-500' },
                 { label: 'Documente', pct: 18, color: 'bg-amber-500' },
                 { label: 'Altele', pct: 9, color: 'bg-gray-400' },
@@ -192,14 +192,14 @@ export default function AdminPage() {
                   <td className="px-4 py-3 text-gray-500">{report.reporter}</td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                      report.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'
+                      report.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-brand-teal-100 text-brand-teal-700'
                     }`}>
                       {report.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
-                      <button className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded hover:bg-emerald-100">Aproba</button>
+                      <button className="text-xs bg-brand-teal-50 text-brand-teal-700 px-2 py-1 rounded hover:bg-brand-teal-100">Aproba</button>
                       <button className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded hover:bg-red-100">Respinge</button>
                     </div>
                   </td>
@@ -230,7 +230,7 @@ export default function AdminPage() {
                     <div>
                       <div className="flex items-center gap-1.5">
                         <span className="font-medium">{u.name}</span>
-                        {u.verified && <span className="text-emerald-500 text-xs">{'\u2713'}</span>}
+                        {u.verified && <span className="text-brand-teal-400 text-xs">{'\u2713'}</span>}
                       </div>
                       <span className="text-xs text-gray-400">{u.email}</span>
                     </div>
@@ -239,7 +239,7 @@ export default function AdminPage() {
                   <td className="px-4 py-3 text-gray-500">{u.score}</td>
                   <td className="px-4 py-3">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                      u.suspended ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
+                      u.suspended ? 'bg-red-100 text-red-700' : 'bg-brand-teal-100 text-brand-teal-700'
                     }`}>
                       {u.suspended ? 'Suspendat' : 'Activ'}
                     </span>
@@ -265,7 +265,7 @@ export default function AdminPage() {
           {MOCK_POSTS.map((post) => (
             <div key={post.id} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-200">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg shrink-0 ${
-                post.type === 'lost' ? 'bg-red-50' : 'bg-emerald-50'
+                post.type === 'lost' ? 'bg-red-50' : 'bg-brand-teal-50'
               }`}>
                 {post.imageEmoji}
               </div>

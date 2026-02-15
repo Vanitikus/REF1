@@ -7,7 +7,7 @@ const MapView = dynamic(() => import('@/components/MapView'), {
   loading: () => (
     <div className="h-[calc(100vh-8rem)] flex items-center justify-center bg-gray-100 rounded-2xl">
       <div className="text-center text-gray-400">
-        <div className="animate-spin w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full mx-auto mb-3" />
+        <div className="animate-spin w-8 h-8 border-2 border-brand-orange-500 border-t-transparent rounded-full mx-auto mb-3" />
         <p className="text-sm">Se incarca harta...</p>
       </div>
     </div>

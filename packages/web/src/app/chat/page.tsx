@@ -185,7 +185,7 @@ export default function ChatPage() {
             <div className="flex gap-1 px-4 py-2 border-b border-gray-50">
               {['Toate', 'Active', 'Rezolvate'].map((f, i) => (
                 <button key={f} className={`px-2.5 py-1 rounded-full text-[10px] font-medium ${
-                  i === 0 ? 'bg-emerald-100 text-emerald-700' : 'text-gray-400 hover:bg-gray-100'
+                  i === 0 ? 'bg-brand-orange-100 text-brand-orange-600' : 'text-gray-400 hover:bg-gray-100'
                 }`}>
                   {f}
                 </button>
@@ -198,13 +198,13 @@ export default function ChatPage() {
                   key={conv.id}
                   onClick={() => setSelectedId(conv.id)}
                   className={`w-full p-4 text-left border-b border-gray-50 hover:bg-gray-50 transition-colors ${
-                    selectedId === conv.id ? 'bg-emerald-50' : ''
+                    selectedId === conv.id ? 'bg-brand-orange-50' : ''
                   }`}
                 >
                   <div className="flex gap-3">
                     <div className="relative shrink-0">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white ${
-                        conv.otherUser.isVerified ? 'bg-emerald-600' : 'bg-gray-400'
+                        conv.otherUser.isVerified ? 'bg-brand-teal-400' : 'bg-gray-400'
                       }`}>
                         {conv.otherUser.initial}
                       </div>
@@ -222,12 +222,12 @@ export default function ChatPage() {
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-xs">{conv.postEmoji}</span>
                         <span className="text-[11px] text-gray-500 truncate">{conv.postTitle}</span>
-                        <span className="text-[9px] text-emerald-600 font-medium shrink-0">{conv.matchScore}%</span>
+                        <span className="text-[9px] text-brand-orange-500 font-medium shrink-0">{conv.matchScore}%</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <p className="text-xs text-gray-400 truncate">{conv.lastMessage}</p>
                         {conv.unread > 0 && (
-                          <span className="ml-2 w-5 h-5 bg-emerald-600 text-white rounded-full text-[10px] flex items-center justify-center shrink-0">
+                          <span className="ml-2 w-5 h-5 bg-brand-orange-500 text-white rounded-full text-[10px] flex items-center justify-center shrink-0">
                             {conv.unread}
                           </span>
                         )}
@@ -252,18 +252,18 @@ export default function ChatPage() {
                     {'\u2190'}
                   </button>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
-                    selected.otherUser.isVerified ? 'bg-emerald-600' : 'bg-gray-400'
+                    selected.otherUser.isVerified ? 'bg-brand-teal-400' : 'bg-gray-400'
                   }`}>
                     {selected.otherUser.initial}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
                       <span className="text-sm font-semibold">{selected.otherUser.name}</span>
-                      {selected.otherUser.isVerified && <span className="text-emerald-500 text-xs">{'\u2713'}</span>}
+                      {selected.otherUser.isVerified && <span className="text-brand-teal-400 text-xs">{'\u2713'}</span>}
                     </div>
                     <div className="flex items-center gap-1">
                       <span className="text-[11px]">{selected.postEmoji}</span>
-                      <Link href={`/post/${selected.postId}`} className="text-[11px] text-gray-400 truncate hover:text-emerald-600">
+                      <Link href={`/post/${selected.postId}`} className="text-[11px] text-gray-400 truncate hover:text-brand-orange-500">
                         {selected.postTitle}
                       </Link>
                     </div>
@@ -274,7 +274,7 @@ export default function ChatPage() {
                     {selected.status === 'active' && (
                       <button
                         onClick={() => markAsResolved(selected.id)}
-                        className="text-[10px] px-2.5 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg font-medium hover:bg-emerald-100 transition-colors"
+                        className="text-[10px] px-2.5 py-1.5 bg-brand-orange-50 text-brand-orange-500 rounded-lg font-medium hover:bg-brand-orange-100 transition-colors"
                       >
                         {'\u2713'} Rezolvat
                       </button>
@@ -288,12 +288,12 @@ export default function ChatPage() {
                 </div>
 
                 {/* Match banner */}
-                <div className="bg-emerald-50 px-4 py-2 flex items-center justify-between text-xs border-b border-emerald-100">
-                  <div className="flex items-center gap-2 text-emerald-700">
+                <div className="bg-brand-orange-50 px-4 py-2 flex items-center justify-between text-xs border-b border-brand-orange-100">
+                  <div className="flex items-center gap-2 text-brand-orange-600">
                     <span>{'\u{1F517}'}</span>
                     <span>Match AI: <strong>{selected.matchScore}%</strong> compatibilitate</span>
                   </div>
-                  <Link href={`/post/${selected.postId}`} className="text-emerald-600 hover:underline font-medium">
+                  <Link href={`/post/${selected.postId}`} className="text-brand-orange-500 hover:underline font-medium">
                     Vezi postarea {'\u2192'}
                   </Link>
                 </div>
@@ -321,12 +321,12 @@ export default function ChatPage() {
                             msg.isMine ? 'rounded-br-md' : 'rounded-bl-md'
                           }`}>
                             <div className={`w-48 h-36 flex items-center justify-center text-3xl ${
-                              msg.isMine ? 'bg-emerald-100' : 'bg-gray-100'
+                              msg.isMine ? 'bg-brand-orange-100' : 'bg-gray-100'
                             }`}>
                               {'\u{1F4F7}'}
                             </div>
                             <div className={`px-3 py-1 text-[10px] ${
-                              msg.isMine ? 'bg-emerald-600 text-emerald-200' : 'bg-gray-100 text-gray-400'
+                              msg.isMine ? 'bg-brand-orange-500 text-brand-orange-200' : 'bg-gray-100 text-gray-400'
                             }`}>
                               {msg.time}
                             </div>
@@ -339,11 +339,11 @@ export default function ChatPage() {
                       <div key={msg.id} className={`flex ${msg.isMine ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[75%] px-4 py-2.5 rounded-2xl ${
                           msg.isMine
-                            ? 'bg-emerald-600 text-white rounded-br-md'
+                            ? 'bg-brand-orange-500 text-white rounded-br-md'
                             : 'bg-gray-100 text-gray-800 rounded-bl-md'
                         }`}>
                           <p className="text-sm">{msg.text}</p>
-                          <p className={`text-[10px] mt-1 ${msg.isMine ? 'text-emerald-200' : 'text-gray-400'}`}>
+                          <p className={`text-[10px] mt-1 ${msg.isMine ? 'text-brand-orange-200' : 'text-gray-400'}`}>
                             {msg.time} {msg.isMine && '\u2713\u2713'}
                           </p>
                         </div>
@@ -400,14 +400,14 @@ export default function ChatPage() {
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       placeholder="Scrie un mesaj..."
-                      className="flex-1 px-4 py-2.5 bg-gray-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="flex-1 px-4 py-2.5 bg-gray-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
                       onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                     />
                     <button
                       onClick={sendMessage}
                       className={`w-10 h-10 flex items-center justify-center rounded-xl transition-colors ${
                         newMessage.trim()
-                          ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                          ? 'bg-brand-orange-500 text-white hover:bg-brand-orange-600'
                           : 'bg-gray-100 text-gray-400'
                       }`}
                     >
