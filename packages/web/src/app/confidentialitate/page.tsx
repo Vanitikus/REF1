@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Confidentialitate - ReFind',
+  description: 'Politica de confidentialitate si protectia datelor personale pe platforma ReFind.',
+};
+
 export default function ConfidentialitatePage() {
   return (
     <div className="py-8 max-w-3xl mx-auto">

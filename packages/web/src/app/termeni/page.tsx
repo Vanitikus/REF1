@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Termeni si conditii - ReFind',
+  description: 'Termenii si conditiile de utilizare a platformei ReFind.',
+};
+
 export default function TermeniPage() {
   return (
     <div className="py-8 max-w-3xl mx-auto">

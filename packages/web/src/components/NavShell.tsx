@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/lib/theme-context';
 import { Logo } from './Logo';
 import { Footer } from './Footer';
+import { PageTransition } from './PageTransition';
 
 const NAV_ITEMS: { href: string; icon: string; label: string; isFab?: boolean }[] = [
   { href: '/', icon: '\u{1F3E0}', label: 'Feed' },
@@ -23,7 +24,9 @@ export function NavShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       {!isAuthPage && <Header pathname={pathname} />}
-      <main className={isAuthPage ? '' : 'max-w-6xl mx-auto px-4 pb-20'}>{children}</main>
+      <main className={isAuthPage ? '' : 'max-w-6xl mx-auto px-4 pb-20'}>
+        <PageTransition>{children}</PageTransition>
+      </main>
       {!isAuthPage && <Footer />}
       {!isAuthPage && <BottomNav pathname={pathname} />}
     </>
@@ -103,7 +106,7 @@ function Header({ pathname }: { pathname: string }) {
 
           <Link href="/notificari" className="relative p-2 text-gray-500 hover:text-gray-700">
             <span className="text-xl">{'\u{1F514}'}</span>
-            <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
+            <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dot-pulse" />
           </Link>
 
           {isAuthenticated && user ? (
@@ -128,7 +131,7 @@ function Header({ pathname }: { pathname: string }) {
 
 function BottomNav({ pathname }: { pathname: string }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 sm:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 sm:hidden animate-slide-up">
       <div className="flex items-center justify-around h-16">
         {NAV_ITEMS.map((item) => {
           if (item.isFab) {

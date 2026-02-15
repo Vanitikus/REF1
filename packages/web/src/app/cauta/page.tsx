@@ -144,7 +144,7 @@ export default function SearchPage() {
       )}
 
       {results.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
           {results.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
@@ -161,7 +161,7 @@ export default function SearchPage() {
       {!query && (
         <div>
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Postari recente</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
             {MOCK_POSTS.slice(0, 6).map((post) => (
               <PostCard key={post.id} post={post} />
             ))}

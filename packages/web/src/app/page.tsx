@@ -71,7 +71,7 @@ export default function FeedPage() {
     <div className="py-6 space-y-6">
       {/* Hero for visitors */}
       {!isAuthenticated && (
-        <div className="bg-gradient-to-r from-brand-orange-500 to-brand-teal-400 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-r from-brand-orange-500 to-brand-teal-400 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden animate-fade-in-up">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
           <div className="relative">
@@ -139,7 +139,7 @@ export default function FeedPage() {
       </div>
 
       {/* Post grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
         {visiblePosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}

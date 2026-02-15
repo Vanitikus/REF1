@@ -6,7 +6,7 @@ export function PostCard({ post }: { post: MockPost }) {
 
   return (
     <Link href={`/post/${post.id}`} className="block">
-      <article className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+      <article className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover-lift">
         {/* Image placeholder */}
         <div className={`h-44 flex items-center justify-center ${isLost ? 'bg-red-50' : 'bg-brand-teal-50'}`}>
           <span className="text-6xl">{post.imageEmoji}</span>

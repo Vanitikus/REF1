@@ -1,4 +1,10 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Cum functioneaza - ReFind',
+  description: 'Descopera cum ReFind foloseste inteligenta artificiala pentru a gasi match-uri intre obiectele pierdute si gasite.',
+};
 
 const STEPS = [
   {
