@@ -93,14 +93,17 @@ export default function AdminPage() {
           <div className="bg-white rounded-xl border border-gray-200 p-4">
             <h3 className="text-sm font-semibold mb-3">Activitate ultimele 7 zile</h3>
             <div className="flex items-end gap-2 h-32">
-              {[45, 62, 38, 75, 53, 89, 67].map((v, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                  <div className="w-full bg-brand-teal-200 rounded-t" style={{ height: `${v}%` }}>
-                    <div className="w-full bg-brand-teal-400 rounded-t" style={{ height: `${Math.random() * 60 + 20}%` }} />
+              {[45, 62, 38, 75, 53, 89, 67].map((v, i) => {
+                const innerHeights = [55, 40, 70, 35, 60, 45, 50];
+                return (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                    <div className="w-full bg-brand-teal-200 rounded-t" style={{ height: `${v}%` }}>
+                      <div className="w-full bg-brand-teal-400 rounded-t" style={{ height: `${innerHeights[i]}%` }} />
+                    </div>
+                    <span className="text-[10px] text-gray-400">{['L', 'M', 'M', 'J', 'V', 'S', 'D'][i]}</span>
                   </div>
-                  <span className="text-[10px] text-gray-400">{['L', 'M', 'M', 'J', 'V', 'S', 'D'][i]}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="flex gap-4 mt-3 text-xs text-gray-400">
               <span className="flex items-center gap-1"><span className="w-2 h-2 bg-brand-teal-400 rounded" />Postari noi</span>

@@ -49,7 +49,7 @@ function Header({ pathname }: { pathname: string }) {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <Logo size="sm" />
 
@@ -85,8 +85,8 @@ function Header({ pathname }: { pathname: string }) {
           </form>
 
           {/* Search icon (mobile) */}
-          <Link href="/cauta" className="md:hidden p-2 text-gray-500 hover:text-gray-700">
-            <span className="text-lg">{'\u{1F50E}'}</span>
+          <Link href="/cauta" className="md:hidden p-2 text-gray-500 hover:text-gray-700" aria-label="Cauta">
+            <span className="text-lg" aria-hidden="true">{'\u{1F50E}'}</span>
           </Link>
 
           <Link
@@ -104,8 +104,8 @@ function Header({ pathname }: { pathname: string }) {
             <span className="text-lg">{isDark ? '\u{2600}' : '\u{1F319}'}</span>
           </button>
 
-          <Link href="/notificari" className="relative p-2 text-gray-500 hover:text-gray-700">
-            <span className="text-xl">{'\u{1F514}'}</span>
+          <Link href="/notificari" className="relative p-2 text-gray-500 hover:text-gray-700" aria-label="Notificari">
+            <span className="text-xl" aria-hidden="true">{'\u{1F514}'}</span>
             <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dot-pulse" />
           </Link>
 
@@ -131,12 +131,12 @@ function Header({ pathname }: { pathname: string }) {
 
 function BottomNav({ pathname }: { pathname: string }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 sm:hidden animate-slide-up">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 sm:hidden animate-slide-up" aria-label="Navigare principala">
       <div className="flex items-center justify-around h-16">
         {NAV_ITEMS.map((item) => {
           if (item.isFab) {
             return (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href} aria-label={item.label}>
                 <div className="w-14 h-14 -mt-5 rounded-full bg-brand-orange-500 text-white shadow-lg flex items-center justify-center text-2xl font-light hover:bg-brand-orange-600 transition-colors">
                   +
                 </div>
@@ -145,8 +145,8 @@ function BottomNav({ pathname }: { pathname: string }) {
           }
           const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
           return (
-            <Link key={item.href} href={item.href} className={`flex flex-col items-center gap-0.5 ${active ? 'text-brand-orange-500' : 'text-gray-400'}`}>
-              <span className="text-xl">{item.icon}</span>
+            <Link key={item.href} href={item.href} aria-label={item.label} className={`flex flex-col items-center gap-0.5 ${active ? 'text-brand-orange-500' : 'text-gray-400'}`}>
+              <span className="text-xl" aria-hidden="true">{item.icon}</span>
               <span className="text-[10px] font-medium">{item.label}</span>
             </Link>
           );

@@ -258,8 +258,8 @@ export default function AuthPage() {
         {mode === 'register' && (
           <p className="text-[11px] text-gray-400 text-center mt-4">
             Prin crearea contului, esti de acord cu{' '}
-            <span className="underline cursor-pointer">Termenii si Conditiile</span> si{' '}
-            <span className="underline cursor-pointer">Politica de Confidentialitate</span>.
+            <Link href="/termeni" className="underline hover:text-gray-600">Termenii si Conditiile</Link> si{' '}
+            <Link href="/confidentialitate" className="underline hover:text-gray-600">Politica de Confidentialitate</Link>.
           </p>
         )}
       </div>
