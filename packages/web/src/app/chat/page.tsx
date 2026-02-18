@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useConversations, useMessages, type Conversation, type Message as HookMessage } from '@/lib/hooks';
 
-interface Conversation {
+interface UIConversation {
   id: string;
   otherUser: { name: string; initial: string; isVerified: boolean };
   postTitle: string;
@@ -17,7 +18,7 @@ interface Conversation {
   status: 'active' | 'resolved';
 }
 
-interface Message {
+interface UIMessage {
   id: string;
   text: string;
   isMine: boolean;
@@ -26,100 +27,75 @@ interface Message {
   imageUrl?: string;
 }
 
-const MOCK_CONVERSATIONS: Conversation[] = [
-  {
-    id: '1',
-    otherUser: { name: 'Maria Ionescu', initial: 'M', isVerified: true },
-    postTitle: 'Catel labrador auriu pierdut',
-    postId: '1',
-    postEmoji: '\u{1F415}',
-    lastMessage: 'Buna! Cred ca am vazut catelul tau azi in parc. Avea zgarda albastra?',
-    lastMessageTime: 'acum 5 min',
-    unread: 2,
+function mapConversation(c: Conversation): UIConversation {
+  return {
+    id: c.id,
+    otherUser: {
+      name: c.user.displayName,
+      initial: c.user.avatarInitial,
+      isVerified: true,
+    },
+    postTitle: c.postTitle,
+    postId: c.id,
+    postEmoji: '\u{1F4E6}',
+    lastMessage: c.lastMessage,
+    lastMessageTime: c.time,
+    unread: c.unread,
     type: 'lost',
-    matchScore: 92,
+    matchScore: c.matchScore ?? 0,
     status: 'active',
-  },
-  {
-    id: '2',
-    otherUser: { name: 'Elena Stanescu', initial: 'E', isVerified: true },
-    postTitle: 'Buletin gasit pe Calea Victoriei',
-    postId: '4',
-    postEmoji: '\u{1F194}',
-    lastMessage: 'Da, cred ca e buletinul meu. Pot sa vin sa il recuperez maine?',
-    lastMessageTime: 'acum 1h',
-    unread: 0,
-    type: 'found',
-    matchScore: 78,
-    status: 'active',
-  },
-  {
-    id: '3',
-    otherUser: { name: 'Andrei Popa', initial: 'A', isVerified: false },
-    postTitle: 'Pisica gri gasita in Drumul Taberei',
-    postId: '2',
-    postEmoji: '\u{1F431}',
-    lastMessage: 'Am trimis o poza cu pisica. E a dumneavoastra?',
-    lastMessageTime: 'ieri',
-    unread: 1,
-    type: 'found',
-    matchScore: 65,
-    status: 'active',
-  },
-  {
-    id: '4',
-    otherUser: { name: 'Ana Dumitrescu', initial: 'A', isVerified: true },
-    postTitle: 'Cheie auto BMW gasita in Parcul Cismigiu',
-    postId: '6',
-    postEmoji: '\u{1F511}',
-    lastMessage: 'Multumesc mult! Am recuperat cheia cu succes.',
-    lastMessageTime: 'acum 2 zile',
-    unread: 0,
-    type: 'found',
-    matchScore: 88,
-    status: 'resolved',
-  },
-];
+  };
+}
 
-const INITIAL_MESSAGES: Message[] = [
-  { id: 's1', text: 'Conversatie deschisa dupa match AI (92%)', isMine: false, time: '14:28', type: 'system' },
-  { id: '1', text: 'Buna ziua! Am vazut postarea dvs despre catelul pierdut.', isMine: false, time: '14:30', type: 'text' },
-  { id: '2', text: 'Buna! Da, il caut disperat. L-ati vazut?', isMine: true, time: '14:32', type: 'text' },
-  { id: '3', text: 'Cred ca am vazut un labrador auriu azi dimineata in Parcul Herastrau, zona lacul.', isMine: false, time: '14:33', type: 'text' },
-  { id: 'img1', text: '', isMine: false, time: '14:33', type: 'image', imageUrl: '' },
-  { id: '4', text: 'Avea zgarda albastra cu medalion?', isMine: true, time: '14:34', type: 'text' },
-  { id: '5', text: 'Buna! Cred ca am vazut catelul tau azi in parc. Avea zgarda albastra?', isMine: false, time: '14:35', type: 'text' },
-];
+function mapMessage(m: HookMessage): UIMessage {
+  return {
+    id: m.id,
+    text: m.content,
+    isMine: m.isMe,
+    time: m.time,
+    type: 'text',
+  };
+}
 
 export default function ChatPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const { conversations: rawConversations, loading: convsLoading } = useConversations();
+  const { messages: rawMessages, loading: msgsLoading, sendMessage: hookSendMessage } = useMessages(selectedId || '');
+  const [localMessages, setLocalMessages] = useState<UIMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [conversations, setConversations] = useState(MOCK_CONVERSATIONS);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const conversations = rawConversations.map(mapConversation);
   const selected = conversations.find((c) => c.id === selectedId);
+
+  // Sync hook messages to local state when conversation changes
+  useEffect(() => {
+    if (!msgsLoading) {
+      setLocalMessages(rawMessages.map(mapMessage));
+    }
+  }, [rawMessages, msgsLoading]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [localMessages]);
 
   const sendMessage = () => {
     if (!newMessage.trim()) return;
 
-    const msg: Message = {
+    const msg: UIMessage = {
       id: String(Date.now()),
       text: newMessage.trim(),
       isMine: true,
       time: new Date().toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' }),
       type: 'text',
     };
-    setMessages((prev) => [...prev, msg]);
+    setLocalMessages((prev) => [...prev, msg]);
+    hookSendMessage(newMessage.trim());
     setNewMessage('');
 
-    // Simulate typing and auto-reply
+    // Simulate typing and auto-reply in mock mode
     setIsTyping(true);
     setTimeout(() => {
       setIsTyping(false);
@@ -129,19 +105,19 @@ export default function ChatPage() {
         'Perfect, iti trimit locatia exacta.',
         'Am inteles, revin cu detalii.',
       ];
-      const reply: Message = {
+      const reply: UIMessage = {
         id: String(Date.now() + 1),
         text: replies[Math.floor(Math.random() * replies.length)],
         isMine: false,
         time: new Date().toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' }),
         type: 'text',
       };
-      setMessages((prev) => [...prev, reply]);
+      setLocalMessages((prev) => [...prev, reply]);
     }, 1500 + Math.random() * 1500);
   };
 
   const handleImageSend = () => {
-    const msg: Message = {
+    const msg: UIMessage = {
       id: String(Date.now()),
       text: '',
       isMine: true,
@@ -149,24 +125,22 @@ export default function ChatPage() {
       type: 'image',
       imageUrl: '',
     };
-    setMessages((prev) => [...prev, msg]);
+    setLocalMessages((prev) => [...prev, msg]);
   };
 
-  const markAsResolved = (convId: string) => {
-    setConversations((prev) =>
-      prev.map((c) => c.id === convId ? { ...c, status: 'resolved' as const } : c)
-    );
-    const sysMsg: Message = {
+  const markAsResolved = (_convId: string) => {
+    const sysMsg: UIMessage = {
       id: String(Date.now()),
       text: 'Conversatia a fost marcata ca rezolvata. Felicitari!',
       isMine: false,
       time: new Date().toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' }),
       type: 'system',
     };
-    setMessages((prev) => [...prev, sysMsg]);
+    setLocalMessages((prev) => [...prev, sysMsg]);
   };
 
   const totalUnread = conversations.reduce((sum, c) => sum + c.unread, 0);
+  const messages = localMessages;
 
   return (
     <div className="py-4">

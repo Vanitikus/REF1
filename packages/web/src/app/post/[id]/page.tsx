@@ -2,15 +2,24 @@
 
 import { use, useState } from 'react';
 import Link from 'next/link';
-import { MOCK_POSTS, getTimeAgo, CATEGORY_LABELS, CATEGORY_EMOJI, type MockPost } from '@/lib/mock-data';
+import { getTimeAgo, CATEGORY_LABELS, CATEGORY_EMOJI, type MockPost } from '@/lib/mock-data';
+import { usePost, usePosts } from '@/lib/hooks';
 
 export default function PostDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const post = MOCK_POSTS.find((p) => p.id === id);
+  const { post, loading } = usePost(id);
   const [showReport, setShowReport] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [reportSent, setReportSent] = useState(false);
   const [shareToast, setShareToast] = useState(false);
+
+  if (loading) {
+    return (
+      <div className="py-20 flex justify-center">
+        <div className="w-8 h-8 border-2 border-brand-orange-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -26,9 +35,8 @@ export default function PostDetailPage({ params }: { params: Promise<{ id: strin
 
   const isLost = post.type === 'lost';
 
-  const similarPosts = MOCK_POSTS.filter(
-    (p) => p.id !== post.id && p.category === post.category
-  ).slice(0, 3);
+  const { posts: categoryPosts } = usePosts({ category: post.category });
+  const similarPosts = categoryPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
   const handleShare = async () => {
     const url = typeof window !== 'undefined' ? window.location.href : '';

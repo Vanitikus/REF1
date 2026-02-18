@@ -2,71 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MOCK_POSTS, getTimeAgo, CATEGORY_EMOJI } from '@/lib/mock-data';
-
-interface Match {
-  id: string;
-  score: number;
-  lostPost: typeof MOCK_POSTS[0];
-  foundPost: typeof MOCK_POSTS[0];
-  status: 'pending' | 'confirmed' | 'rejected';
-  signals: { label: string; score: number }[];
-  createdAt: string;
-}
-
-const MOCK_MATCHES: Match[] = [
-  {
-    id: 'm1',
-    score: 92,
-    lostPost: MOCK_POSTS[0],
-    foundPost: MOCK_POSTS[7],
-    status: 'pending',
-    signals: [
-      { label: 'Locatie', score: 85 },
-      { label: 'Vizual', score: 95 },
-      { label: 'Categorie', score: 100 },
-      { label: 'Timp', score: 70 },
-      { label: 'Text', score: 88 },
-    ],
-    createdAt: '2026-02-13T10:00:00Z',
-  },
-  {
-    id: 'm2',
-    score: 78,
-    lostPost: MOCK_POSTS[2],
-    foundPost: MOCK_POSTS[5],
-    status: 'pending',
-    signals: [
-      { label: 'Locatie', score: 60 },
-      { label: 'Vizual', score: 70 },
-      { label: 'Categorie', score: 100 },
-      { label: 'Timp', score: 80 },
-      { label: 'Text', score: 65 },
-    ],
-    createdAt: '2026-02-12T15:30:00Z',
-  },
-  {
-    id: 'm3',
-    score: 65,
-    lostPost: MOCK_POSTS[4],
-    foundPost: MOCK_POSTS[1],
-    status: 'confirmed',
-    signals: [
-      { label: 'Locatie', score: 40 },
-      { label: 'Vizual', score: 55 },
-      { label: 'Categorie', score: 100 },
-      { label: 'Timp', score: 75 },
-      { label: 'Text', score: 50 },
-    ],
-    createdAt: '2026-02-11T08:00:00Z',
-  },
-];
+import { getTimeAgo, CATEGORY_EMOJI } from '@/lib/mock-data';
+import { useMatches, type Match } from '@/lib/hooks';
 
 type Tab = 'all' | 'pending' | 'confirmed' | 'rejected';
 
 export default function MatchuriPage() {
   const [tab, setTab] = useState<Tab>('all');
-  const [matches, setMatches] = useState(MOCK_MATCHES);
+  const { matches, loading, confirmMatch, rejectMatch } = useMatches();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const filtered = tab === 'all' ? matches : matches.filter((m) => m.status === tab);
@@ -75,10 +18,6 @@ export default function MatchuriPage() {
     pending: matches.filter((m) => m.status === 'pending').length,
     confirmed: matches.filter((m) => m.status === 'confirmed').length,
     rejected: matches.filter((m) => m.status === 'rejected').length,
-  };
-
-  const handleAction = (id: string, action: 'confirmed' | 'rejected') => {
-    setMatches((prev) => prev.map((m) => m.id === id ? { ...m, status: action } : m));
   };
 
   const tabs: { key: Tab; label: string }[] = [
@@ -122,7 +61,11 @@ export default function MatchuriPage() {
       </div>
 
       {/* Match list */}
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center py-16">
+          <div className="w-8 h-8 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
           <span className="text-5xl block mb-4">{'\u{1F50D}'}</span>
           <p className="text-lg font-medium">Niciun match {tab !== 'all' ? 'in aceasta categorie' : ''}</p>
@@ -136,8 +79,8 @@ export default function MatchuriPage() {
               match={match}
               expanded={expandedId === match.id}
               onToggle={() => setExpandedId(expandedId === match.id ? null : match.id)}
-              onConfirm={() => handleAction(match.id, 'confirmed')}
-              onReject={() => handleAction(match.id, 'rejected')}
+              onConfirm={() => confirmMatch(match.id)}
+              onReject={() => rejectMatch(match.id)}
             />
           ))}
         </div>
@@ -290,7 +233,7 @@ function MatchCard({
   );
 }
 
-function PostMiniCard({ post, type }: { post: typeof MOCK_POSTS[0]; type: 'lost' | 'found' }) {
+function PostMiniCard({ post, type }: { post: { id: string; title: string; locationName: string; category: string; imageEmoji: string; createdAt: string }; type: 'lost' | 'found' }) {
   const isLost = type === 'lost';
 
   return (

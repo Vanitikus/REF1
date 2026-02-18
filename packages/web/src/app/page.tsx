@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { PostCard } from '@/components/PostCard';
 import { FilterBar, type TypeFilter, type CategoryFilter } from '@/components/FilterBar';
 import { StatsBar } from '@/components/StatsBar';
-import { MOCK_POSTS } from '@/lib/mock-data';
+import { usePosts } from '@/lib/hooks';
 import { useAuth } from '@/lib/auth-context';
 
 type SortKey = 'recent' | 'reward' | 'views';
@@ -19,23 +19,24 @@ export default function FeedPage() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const loaderRef = useRef<HTMLDivElement>(null);
 
+  const { posts: rawPosts, loading: postsLoading } = usePosts({
+    type: typeFilter !== 'all' ? typeFilter : undefined,
+    category: categoryFilter !== 'all' ? categoryFilter : undefined,
+  });
+
   const filtered = useMemo(() => {
-    let posts = MOCK_POSTS.filter((post) => {
-      if (typeFilter !== 'all' && post.type !== typeFilter) return false;
-      if (categoryFilter !== 'all' && post.category !== categoryFilter) return false;
-      return true;
-    });
+    let posts = [...rawPosts];
 
     if (sort === 'recent') {
-      posts = [...posts].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      posts = posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     } else if (sort === 'reward') {
-      posts = [...posts].sort((a, b) => (b.rewardAmount || 0) - (a.rewardAmount || 0));
+      posts = posts.sort((a, b) => (b.rewardAmount || 0) - (a.rewardAmount || 0));
     } else if (sort === 'views') {
-      posts = [...posts].sort((a, b) => b.viewCount - a.viewCount);
+      posts = posts.sort((a, b) => b.viewCount - a.viewCount);
     }
 
     return posts;
-  }, [typeFilter, categoryFilter, sort]);
+  }, [rawPosts, sort]);
 
   // Reset visible count when filters change
   useEffect(() => {
@@ -139,11 +140,17 @@ export default function FeedPage() {
       </div>
 
       {/* Post grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
-        {visiblePosts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
-      </div>
+      {postsLoading ? (
+        <div className="flex justify-center py-16">
+          <div className="w-8 h-8 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
+          {visiblePosts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+      )}
 
       {/* Infinite scroll loader */}
       {hasMore && (

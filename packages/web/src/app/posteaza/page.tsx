@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ImageUpload } from '@/components/ImageUpload';
 import { LocationPicker } from '@/components/LocationPicker';
+import { useCreatePost } from '@/lib/hooks';
+import { useAuth } from '@/lib/auth-context';
 
 type PostType = 'lost' | 'found';
 type Category = 'pet' | 'object' | 'document' | 'other';
@@ -26,6 +29,10 @@ export default function PosteazaPage() {
   const [reward, setReward] = useState('');
   const [images, setImages] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const { createPost, loading: submitting } = useCreatePost();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
 
   const totalSteps = 3;
 
@@ -35,8 +42,30 @@ export default function PosteazaPage() {
     return true;
   };
 
-  const handleSubmit = () => {
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setSubmitError(null);
+
+    if (!isAuthenticated) {
+      router.push('/autentificare');
+      return;
+    }
+
+    const result = await createPost({
+      type: postType,
+      category,
+      title,
+      description,
+      locationName: location,
+      location: locationCoords ? { lat: locationCoords.lat, lng: locationCoords.lng } : undefined,
+      rewardAmount: reward ? Number(reward) : undefined,
+      rewardCurrency: reward ? 'RON' : undefined,
+    });
+
+    if (result.error) {
+      setSubmitError(result.error);
+    } else {
+      setSubmitted(true);
+    }
   };
 
   if (submitted) {
@@ -289,6 +318,13 @@ export default function PosteazaPage() {
               daca gaseste un match potential.
             </p>
           </div>
+
+          {submitError && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex gap-3">
+              <span className="text-lg">{'\u{26A0}'}</span>
+              <p className="text-xs text-red-700">{submitError}</p>
+            </div>
+          )}
         </div>
       )}
 
@@ -304,14 +340,14 @@ export default function PosteazaPage() {
         )}
         <button
           onClick={() => step < totalSteps ? setStep(step + 1) : handleSubmit()}
-          disabled={!canNext()}
+          disabled={!canNext() || submitting}
           className={`flex-1 py-3 rounded-xl text-sm font-medium transition-colors ${
             canNext()
               ? 'bg-brand-orange-500 text-white hover:bg-brand-orange-600'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >
-          {step < totalSteps ? 'Continua \u2192' : 'Publica postarea'}
+          {submitting ? 'Se publica...' : step < totalSteps ? 'Continua \u2192' : 'Publica postarea'}
         </button>
       </div>
     </div>

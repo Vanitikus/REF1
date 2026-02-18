@@ -2,7 +2,8 @@
 
 import { useState, useMemo } from 'react';
 import { PostCard } from '@/components/PostCard';
-import { MOCK_POSTS, CATEGORY_LABELS, CATEGORY_EMOJI } from '@/lib/mock-data';
+import { CATEGORY_LABELS, CATEGORY_EMOJI } from '@/lib/mock-data';
+import { usePosts } from '@/lib/hooks';
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
@@ -10,8 +11,13 @@ export default function SearchPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [hasReward, setHasReward] = useState(false);
 
+  const { posts: allPosts, loading: postsLoading } = usePosts({
+    type: typeFilter !== 'all' ? typeFilter : undefined,
+    category: categoryFilter !== 'all' ? categoryFilter : undefined,
+  });
+
   const results = useMemo(() => {
-    let posts = MOCK_POSTS;
+    let posts = allPosts;
 
     if (query.trim()) {
       const q = query.toLowerCase();
@@ -23,20 +29,12 @@ export default function SearchPage() {
       );
     }
 
-    if (typeFilter !== 'all') {
-      posts = posts.filter((p) => p.type === typeFilter);
-    }
-
-    if (categoryFilter !== 'all') {
-      posts = posts.filter((p) => p.category === categoryFilter);
-    }
-
     if (hasReward) {
       posts = posts.filter((p) => p.rewardAmount && p.rewardAmount > 0);
     }
 
     return posts;
-  }, [query, typeFilter, categoryFilter, hasReward]);
+  }, [allPosts, query, hasReward]);
 
   const suggestions = ['labrador', 'buletin', 'portofel', 'pisica', 'cheie', 'rucsac'];
 
@@ -161,11 +159,17 @@ export default function SearchPage() {
       {!query && (
         <div>
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Postari recente</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
-            {MOCK_POSTS.slice(0, 6).map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
+          {postsLoading ? (
+            <div className="flex justify-center py-8">
+              <div className="w-6 h-6 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-grid">
+              {allPosts.slice(0, 6).map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

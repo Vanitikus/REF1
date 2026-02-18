@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { MOCK_POSTS, getTimeAgo } from '@/lib/mock-data';
+import { getTimeAgo } from '@/lib/mock-data';
+import { usePosts } from '@/lib/hooks';
 
 type Tab = 'posts' | 'resolved' | 'settings';
 
@@ -52,8 +53,9 @@ export default function ProfilPage() {
     );
   }
 
-  const userPosts = MOCK_POSTS.slice(0, 3);
-  const resolvedPosts = MOCK_POSTS.slice(3, 5);
+  const { posts: allPosts, loading: postsLoading } = usePosts();
+  const userPosts = allPosts.slice(0, 3);
+  const resolvedPosts = allPosts.slice(3, 5);
 
   const handleLogout = () => {
     logout();

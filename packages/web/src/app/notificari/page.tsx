@@ -2,114 +2,17 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-
-interface Notification {
-  id: string;
-  type: 'match' | 'message' | 'system' | 'reward' | 'alert';
-  title: string;
-  body: string;
-  time: string;
-  isRead: boolean;
-  link?: string;
-  emoji: string;
-}
-
-const INITIAL_NOTIFICATIONS: Notification[] = [
-  {
-    id: '1',
-    type: 'match',
-    title: 'Match nou detectat!',
-    body: 'Un catel similar cu "Labrador auriu pierdut" a fost gasit in zona Herastrau.',
-    time: 'acum 5 min',
-    isRead: false,
-    link: '/matchuri',
-    emoji: '\u{1F517}',
-  },
-  {
-    id: '2',
-    type: 'message',
-    title: 'Mesaj nou de la Maria Ionescu',
-    body: 'Cred ca am vazut catelul tau azi in parc...',
-    time: 'acum 20 min',
-    isRead: false,
-    link: '/chat',
-    emoji: '\u{1F4AC}',
-  },
-  {
-    id: '3',
-    type: 'alert',
-    title: 'Alerta zona: Document gasit',
-    body: 'Un buletin a fost gasit la 500m de zona ta de alerta.',
-    time: 'acum 1h',
-    isRead: false,
-    link: '/post/4',
-    emoji: '\u{1F4CD}',
-  },
-  {
-    id: '4',
-    type: 'reward',
-    title: 'Recompensa disponibila',
-    body: 'Postarea "Catel labrador auriu" ofera o recompensa de 500 RON.',
-    time: 'acum 3h',
-    isRead: true,
-    link: '/post/1',
-    emoji: '\u{1F3C6}',
-  },
-  {
-    id: '5',
-    type: 'system',
-    title: 'Postare expirata',
-    body: 'Postarea "Portofel maro pierdut" a expirat dupa 30 de zile. Doresti sa o reactivezi?',
-    time: 'ieri',
-    isRead: true,
-    link: '/postarile-mele',
-    emoji: '\u{23F0}',
-  },
-  {
-    id: '6',
-    type: 'match',
-    title: 'Match confirmat!',
-    body: 'Elena Stanescu a confirmat match-ul pentru "Buletin gasit pe Calea Victoriei".',
-    time: 'acum 2 zile',
-    isRead: true,
-    link: '/matchuri',
-    emoji: '\u{2705}',
-  },
-  {
-    id: '7',
-    type: 'system',
-    title: 'Bine ai venit pe ReFind!',
-    body: 'Contul tau a fost creat cu succes. Completeaza-ti profilul pentru a primi mai multe match-uri.',
-    time: 'acum 5 zile',
-    isRead: true,
-    link: '/profil',
-    emoji: '\u{1F44B}',
-  },
-];
+import { useNotifications, type Notification } from '@/lib/hooks';
 
 type FilterKey = 'all' | 'match' | 'message' | 'alert' | 'system';
 
 export default function NotificariPage() {
-  const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
+  const { notifications, loading, unreadCount: unread, markAsRead, markAllRead, deleteNotification } = useNotifications();
   const [filter, setFilter] = useState<FilterKey>('all');
-
-  const unread = notifications.filter((n) => !n.isRead).length;
 
   const filtered = filter === 'all'
     ? notifications
     : notifications.filter((n) => n.type === filter || (filter === 'alert' && n.type === 'reward'));
-
-  const markAllRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-  };
-
-  const markAsRead = (id: string) => {
-    setNotifications((prev) => prev.map((n) => n.id === id ? { ...n, isRead: true } : n));
-  };
-
-  const deleteNotification = (id: string) => {
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
-  };
 
   const filters: { key: FilterKey; label: string }[] = [
     { key: 'all', label: `Toate (${notifications.length})` },
@@ -156,7 +59,11 @@ export default function NotificariPage() {
       </div>
 
       {/* Notification list */}
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center py-16">
+          <div className="w-8 h-8 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
           <span className="text-5xl block mb-4">{'\u{1F514}'}</span>
           <p className="text-lg font-medium">Nicio notificare</p>
