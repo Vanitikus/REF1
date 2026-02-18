@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
-import { MOCK_POSTS, getTimeAgo } from '@/lib/mock-data';
+import { getTimeAgo } from '@/lib/mock-data';
+import { usePosts } from '@/lib/hooks';
 
 type AdminTab = 'overview' | 'reports' | 'users' | 'posts';
 
@@ -23,6 +24,7 @@ const MOCK_USERS = [
 export default function AdminPage() {
   const { user, isAuthenticated } = useAuth();
   const [tab, setTab] = useState<AdminTab>('overview');
+  const { posts: allPosts, loading: postsLoading } = usePosts();
 
   if (!isAuthenticated || !user) {
     return (
@@ -265,7 +267,12 @@ export default function AdminPage() {
       {/* Posts tab */}
       {tab === 'posts' && (
         <div className="space-y-3">
-          {MOCK_POSTS.map((post) => (
+          {postsLoading && (
+            <div className="flex justify-center py-8">
+              <div className="w-6 h-6 border-2 border-brand-orange-300 border-t-brand-orange-500 rounded-full animate-spin" />
+            </div>
+          )}
+          {allPosts.map((post) => (
             <div key={post.id} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-200">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg shrink-0 ${
                 post.type === 'lost' ? 'bg-red-50' : 'bg-brand-teal-50'

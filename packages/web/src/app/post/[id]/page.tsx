@@ -4,6 +4,8 @@ import { use, useState } from 'react';
 import Link from 'next/link';
 import { getTimeAgo, CATEGORY_LABELS, CATEGORY_EMOJI, type MockPost } from '@/lib/mock-data';
 import { usePost, usePosts } from '@/lib/hooks';
+import { useAuth } from '@/lib/auth-context';
+import { reportsApi } from '@/lib/api-client';
 
 export default function PostDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -55,8 +57,17 @@ export default function PostDetailPage({ params }: { params: Promise<{ id: strin
     }
   };
 
-  const handleReport = () => {
+  const { token } = useAuth();
+
+  const handleReport = async () => {
     if (reportReason) {
+      if (token) {
+        await reportsApi.submit({
+          targetType: 'post',
+          targetId: id,
+          reason: reportReason,
+        }, token);
+      }
       setReportSent(true);
       setTimeout(() => {
         setShowReport(false);

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MOCK_POSTS, CATEGORY_LABELS, getTimeAgo, type MockPost } from '@/lib/mock-data';
+import { CATEGORY_LABELS, getTimeAgo, type MockPost } from '@/lib/mock-data';
+import { usePosts } from '@/lib/hooks';
 
 // Leaflet requires dynamic import in Next.js (no SSR)
 let L: typeof import('leaflet') | null = null;
@@ -11,6 +12,9 @@ export default function MapView() {
   const [mounted, setMounted] = useState(false);
   const [selected, setSelected] = useState<MockPost | null>(null);
   const [filter, setFilter] = useState<'all' | 'lost' | 'found'>('all');
+  const { posts: allPosts } = usePosts({
+    type: filter !== 'all' ? filter : undefined,
+  });
 
   useEffect(() => {
     // Dynamic import of leaflet (CSS loaded via link tag)
@@ -73,9 +77,7 @@ export default function MapView() {
     };
 
     // Add markers
-    const posts = filter === 'all' ? MOCK_POSTS : MOCK_POSTS.filter((p) => p.type === filter);
-
-    posts.forEach((post) => {
+    allPosts.forEach((post) => {
       const marker = L!.marker([post.location.lat, post.location.lng], {
         icon: createIcon(post.type, post.imageEmoji),
       }).addTo(map);
@@ -88,7 +90,7 @@ export default function MapView() {
     return () => {
       map.remove();
     };
-  }, [mounted, filter]);
+  }, [mounted, filter, allPosts]);
 
   if (!mounted) {
     return (

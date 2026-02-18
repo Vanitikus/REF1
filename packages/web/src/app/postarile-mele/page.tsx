@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MOCK_POSTS, getTimeAgo, CATEGORY_EMOJI, CATEGORY_LABELS } from '@/lib/mock-data';
+import { getTimeAgo, CATEGORY_EMOJI, CATEGORY_LABELS } from '@/lib/mock-data';
 import { useAuth } from '@/lib/auth-context';
+import { usePosts } from '@/lib/hooks';
 
 type PostStatus = 'active' | 'resolved' | 'expired';
 
@@ -22,15 +23,20 @@ interface ManagedPost {
   expiresAt: string;
 }
 
-const MY_POSTS: ManagedPost[] = MOCK_POSTS.slice(0, 4).map((p, i) => ({
-  ...p,
-  status: (i === 3 ? 'resolved' : i === 2 ? 'expired' : 'active') as PostStatus,
-  expiresAt: new Date(Date.now() + (30 - i * 10) * 86400000).toISOString(),
-}));
-
 export default function PostarileMelePage() {
   const { isAuthenticated } = useAuth();
-  const [posts, setPosts] = useState(MY_POSTS);
+  const { posts: fetchedPosts, loading: postsLoading } = usePosts();
+  const [posts, setPosts] = useState<ManagedPost[]>([]);
+
+  useEffect(() => {
+    if (!postsLoading && fetchedPosts.length > 0 && posts.length === 0) {
+      setPosts(fetchedPosts.slice(0, 4).map((p, i) => ({
+        ...p,
+        status: (i === 3 ? 'resolved' : i === 2 ? 'expired' : 'active') as PostStatus,
+        expiresAt: new Date(Date.now() + (30 - i * 10) * 86400000).toISOString(),
+      })));
+    }
+  }, [fetchedPosts, postsLoading, posts.length]);
   const [filter, setFilter] = useState<'all' | PostStatus>('all');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
